@@ -32,7 +32,6 @@
 #include "eigen3/Eigen/Dense"
 #include "eigen3/Eigen/Geometry"
 #include "amrl_msgs/Localization2DMsg.h"
-#include "gflags/gflags.h"
 #include "geometry_msgs/Pose2D.h"
 #include "geometry_msgs/PoseArray.h"
 #include "geometry_msgs/PoseStamped.h"
@@ -71,10 +70,13 @@ DEFINE_string(init_topic,
               "initialpose",
               "Name of ROS topic for initialization");
 DEFINE_string(map, "GDC1", "Name of vector map file");
+DEFINE_string(robot_config, "config/navigation.lua", "Robot config file");
+
 
 bool run_ = true;
 sensor_msgs::LaserScan last_laser_msg_;
 Navigation* navigation_ = nullptr;
+NavigationParams* robot_config_ = nullptr; // use default values for now, but read from config later
 
 void LaserCallback(const sensor_msgs::LaserScan& msg) {
   if (FLAGS_v > 0) {
@@ -144,6 +146,7 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "navigation", ros::init_options::NoSigintHandler);
   ros::NodeHandle n;
   navigation_ = new Navigation(FLAGS_map, &n);
+  robot_config_ = new NavigationParams();
 
   ros::Subscriber string_sub = 
       n.subscribe("string_topic", 1, &StringCallback);

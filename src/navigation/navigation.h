@@ -102,6 +102,21 @@ class Navigation {
   vector_map::VectorMap map_;
 };
 
+struct NavigationParams {
+  // frequency
+  float dt = 1/20;
+  // max velocity
+  float max_vel = 1.0f;
+  // max acceleration
+  float max_accel = 1.0f;
+  // max angular velocity
+  float max_omega = 1.0f;
+  // max angular acceleration
+  float max_alpha = 1.0f;
+  // max curvature
+  float max_curvature = 1.0f;
+};
+
 }  // namespace navigation
 
 #endif  // NAVIGATION_H
