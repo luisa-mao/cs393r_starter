@@ -109,6 +109,7 @@ struct NavigationParams {
   float max_vel = 1.0f;
   // max acceleration
   float max_accel = 1.0f;
+  float max_decel = 1.0f;
   // max angular velocity
   float max_omega = 1.0f;
   // max angular acceleration

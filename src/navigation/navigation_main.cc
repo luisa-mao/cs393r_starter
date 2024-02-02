@@ -53,6 +53,7 @@ using amrl_msgs::Localization2DMsg;
 using math_util::DegToRad;
 using math_util::RadToDeg;
 using navigation::Navigation;
+using navigation::NavigationParams;
 using ros::Time;
 using ros_helpers::Eigen3DToRosPoint;
 using ros_helpers::Eigen2DToRosPoint;

@@ -33,6 +33,7 @@
 #include "shared/ros/ros_helpers.h"
 #include "navigation.h"
 #include "visualization/visualization.h"
+#include "path_options.h"
 
 using Eigen::Vector2f;
 using amrl_msgs::AckermannCurvatureDriveMsg;
@@ -131,6 +132,11 @@ void Navigation::Run() {
   // Eventually, you will have to set the control values to issue drive commands:
   // drive_msg_.curvature = ...;
   // drive_msg_.velocity = ...;
+  // float current_speed = robot_vel_.norm();
+  // float cmd_vel = Run1DTimeOptimalControl(10.0);
+  // print cmd_vel
+  // printf("cmd_vel: %f\n", cmd_vel);
+
   drive_msg_.curvature = 0;
   drive_msg_.velocity = 1.0;
 
