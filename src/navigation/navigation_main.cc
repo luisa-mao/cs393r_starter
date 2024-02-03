@@ -97,6 +97,17 @@ void LaserCallback(const sensor_msgs::LaserScan& msg) {
   // msg.range_max // Maximum observable range
   // msg.range_min // Minimum observable range
   // msg.ranges[i] // The range of the i'th ray
+
+  // save the pointcloud in the robot's frame
+  point_cloud_.clear();
+  for (size_t i = 0; i < msg.ranges.size(); i++) {
+    if (msg.ranges[i] < msg.range_max) {
+      const float angle = msg.angle_min + i * msg.angle_increment;
+      const Vector2f point(msg.ranges[i] * cos(angle), msg.ranges[i] * sin(angle));
+      point_cloud_.push_back(point);
+    }
+  }
+  
   navigation_->ObservePointCloud(point_cloud_, msg.header.stamp.toSec());
   last_laser_msg_ = msg;
 }
