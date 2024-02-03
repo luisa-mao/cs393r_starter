@@ -104,6 +104,7 @@ void LaserCallback(const sensor_msgs::LaserScan& msg) {
     if (msg.ranges[i] < msg.range_max) {
       const float angle = msg.angle_min + i * msg.angle_increment;
       const Vector2f point(msg.ranges[i] * cos(angle), msg.ranges[i] * sin(angle));
+      // const Vector2f point(msg.ranges[i] * sin(angle), -msg.ranges[i] * cos(angle));
       point_cloud_.push_back(point);
     }
   }

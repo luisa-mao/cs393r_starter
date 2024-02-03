@@ -156,6 +156,30 @@ void Navigation::Run() {
   // Draw the best path in red
   visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, 0, 0xFF0000, false, local_viz_msg_);
 
+
+
+// Draw each point in the point cloud in green
+// for (const auto& point : point_cloud_) {
+//   visualization::DrawPoint(point, 0x00FF00, local_viz_msg_);
+// }
+PathOption x = path_options[0];
+visualization::DrawPoint(Vector2f(0, 1/x.curvature), 0x00FF00, local_viz_msg_);
+if (x.obstruction == Vector2f(0, 0)) {
+  visualization::DrawPoint(x.obstruction, 0xFF0000, local_viz_msg_);
+}
+else {
+  visualization::DrawPoint(x.obstruction, 0x0000FF, local_viz_msg_);
+}
+
+
+// Add timestamps to all messages.
+local_viz_msg_.header.stamp = ros::Time::now();
+global_viz_msg_.header.stamp = ros::Time::now();
+drive_msg_.header.stamp = ros::Time::now();
+// Publish messages.
+viz_pub_.publish(local_viz_msg_);
+viz_pub_.publish(global_viz_msg_);
+drive_pub_.publish(drive_msg_);
   // Add timestamps to all messages.
   local_viz_msg_.header.stamp = ros::Time::now();
   global_viz_msg_.header.stamp = ros::Time::now();

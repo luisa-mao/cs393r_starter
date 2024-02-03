@@ -9,7 +9,8 @@ using Eigen::Vector2f;
 
 float run1DTimeOptimalControl(float dist_to_go, float current_speed, const navigation::NavigationParams& nav_params);
 
-float getFreePathLength(float curvature,
+void setPathOption(navigation::PathOption& path_option,
+    float curvature,
     const std::vector<Eigen::Vector2f>& point_cloud,
     const navigation::NavigationParams& nav_params);
 
