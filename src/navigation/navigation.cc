@@ -132,19 +132,17 @@ void Navigation::Run() {
   // Eventually, you will have to set the control values to issue drive commands:
   // drive_msg_.curvature = ...;
   // drive_msg_.velocity = ...;
-  // float current_speed = robot_vel_.norm();
+  float current_speed = robot_vel_.norm();
 
   // distance_traveled_ += current_speed * robot_config_.dt;
   // float dist_to_go = (10 - distance_traveled_); // hard code to make it go 10 forward
   // float cmd_vel = run1DTimeOptimalControl(dist_to_go, current_speed, robot_config_);
 
-  vector<PathOption> path_options = samplePathOptions(11, point_cloud_, robot_config_);
+  vector<PathOption> path_options = samplePathOptions(31, point_cloud_, robot_config_);
   int best_path = selectPath(path_options);
 
-  drive_msg_.curvature = 0;
-  drive_msg_.velocity = 0;
-  // drive_msg_.curvature = path_options[best_path].curvature;
-  // drive_msg_.velocity = run1DTimeOptimalControl(path_options[best_path].free_path_length, current_speed, robot_config_);
+  drive_msg_.curvature = path_options[best_path].curvature;
+  drive_msg_.velocity = run1DTimeOptimalControl(path_options[best_path].free_path_length, current_speed, robot_config_);
 
   // visualization here
   visualization::DrawRectangle(Vector2f(robot_config_.length/2 - robot_config_.base_link_offset, 0),
@@ -155,22 +153,8 @@ void Navigation::Run() {
   }
   // Draw the best path in red
   visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, 0, 0xFF0000, false, local_viz_msg_);
-
-
-
-// Draw each point in the point cloud in green
-// for (const auto& point : point_cloud_) {
-//   visualization::DrawPoint(point, 0x00FF00, local_viz_msg_);
-// }
-PathOption x = path_options[0];
-visualization::DrawPoint(Vector2f(0, 1/x.curvature), 0x00FF00, local_viz_msg_);
-if (x.obstruction == Vector2f(0, 0)) {
-  visualization::DrawPoint(x.obstruction, 0xFF0000, local_viz_msg_);
-}
-else {
-  visualization::DrawPoint(x.obstruction, 0x0000FF, local_viz_msg_);
-}
-
+    
+  visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
 // Add timestamps to all messages.
 local_viz_msg_.header.stamp = ros::Time::now();
