@@ -43,6 +43,27 @@ struct PathOption {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 };
 
+struct NavigationParams {
+  // frequency
+  float dt = .05f;
+  // max velocity
+  float max_vel = 1.0f;
+  // max acceleration
+  float max_accel = 1.0f;
+  float max_decel = 1.0f;
+  // max angular velocity
+  float max_omega = 1.0f;
+  // max angular acceleration
+  float max_alpha = 1.0f;
+  // max curvature
+  float max_curvature = 0.5f;
+
+  // robot dimensions
+  float  width = 02.5f;
+  float  length = 05.0f;
+  float  base_link_offset = 0; // make this 0 for now
+};
+
 class Navigation {
  public:
 
@@ -91,6 +112,8 @@ class Navigation {
   float odom_start_angle_;
   // Latest observed point cloud.
   std::vector<Eigen::Vector2f> point_cloud_;
+  // distance traveled
+  float distance_traveled_ = 0.0f;
 
   // Whether navigation is complete.
   bool nav_complete_;
@@ -100,28 +123,11 @@ class Navigation {
   float nav_goal_angle_;
   // Map of the environment.
   vector_map::VectorMap map_;
+
+  // robot config
+  NavigationParams robot_config_;
 };
 
-struct NavigationParams {
-  // frequency
-  float dt = 1/20;
-  // max velocity
-  float max_vel = 1.0f;
-  // max acceleration
-  float max_accel = 1.0f;
-  float max_decel = 1.0f;
-  // max angular velocity
-  float max_omega = 1.0f;
-  // max angular acceleration
-  float max_alpha = 1.0f;
-  // max curvature
-  float max_curvature = 1.0f;
-
-  // robot dimensions
-  float  width = 0.44f;
-  float  length = 0.5f;
-  float  base_link_offset = 0f; // make this 0 for now
-};
 
 }  // namespace navigation
 

@@ -133,13 +133,28 @@ void Navigation::Run() {
   // drive_msg_.curvature = ...;
   // drive_msg_.velocity = ...;
   // float current_speed = robot_vel_.norm();
-  // float cmd_vel = Run1DTimeOptimalControl(10.0);
-  // print cmd_vel
-  // printf("cmd_vel: %f\n", cmd_vel);
+
+  // distance_traveled_ += current_speed * robot_config_.dt;
+  // float dist_to_go = (10 - distance_traveled_); // hard code to make it go 10 forward
+  // float cmd_vel = run1DTimeOptimalControl(dist_to_go, current_speed, robot_config_);
+
+  vector<PathOption> path_options = samplePathOptions(11, point_cloud_, robot_config_);
+  int best_path = selectPath(path_options);
 
   drive_msg_.curvature = 0;
-  drive_msg_.velocity = 1.0;
+  drive_msg_.velocity = 0;
+  // drive_msg_.curvature = path_options[best_path].curvature;
+  // drive_msg_.velocity = run1DTimeOptimalControl(path_options[best_path].free_path_length, current_speed, robot_config_);
 
+  // visualization here
+  visualization::DrawRectangle(Vector2f(robot_config_.length/2 - robot_config_.base_link_offset, 0),
+      robot_config_.length, robot_config_.width, 0, 0x00FF00, local_viz_msg_);
+  // Draw all path options in blue
+  for (unsigned int i = 0; i < path_options.size(); i++) {
+      visualization::DrawPathOption(path_options[i].curvature, path_options[i].free_path_length, 0, 0x0000FF, false, local_viz_msg_);
+  }
+  // Draw the best path in red
+  visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, 0, 0xFF0000, false, local_viz_msg_);
 
   // Add timestamps to all messages.
   local_viz_msg_.header.stamp = ros::Time::now();
