@@ -116,6 +116,11 @@ struct NavigationParams {
   float max_alpha = 1.0f;
   // max curvature
   float max_curvature = 1.0f;
+
+  // robot dimensions
+  float  width = 0.44f;
+  float  length = 0.5f;
+  float  base_link_offset = 0f; // make this 0 for now
 };
 
 }  // namespace navigation
