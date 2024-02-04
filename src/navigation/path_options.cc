@@ -103,14 +103,18 @@ vector<navigation::PathOption> samplePathOptions(int num_options,
     path_options.clear();
     float max_curvature = robot_config.max_curvature;
 
-
     // loop through curvature from max to -max
-    for (int i = 0; i < num_options; i++) {  // only do the positive ones for now
-        float curvature = -max_curvature + (2 * max_curvature) * i / (num_options - 1);
+    for (int i = 0; i < num_options; i++) { 
+        float curvature = max_curvature * pow(2*i/float(num_options-1) - 1, 2);
+        if (i < num_options / 2) {
+            curvature = -curvature;
+        }
+        
         navigation::PathOption path_option;
         setPathOption(path_option, curvature, point_cloud, robot_config);
         path_options.push_back(path_option);
     }
+    // exit(0);
     return path_options;
 }
 
