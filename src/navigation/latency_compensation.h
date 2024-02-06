@@ -21,25 +21,26 @@ struct Observation {
 
 class LatencyCompensation {
 public:
-    LatencyCompensation(float actuation_delay, float observation_delay, double dt) :
-        actuation_delay_(actuation_delay),
-        observation_delay_(observation_delay),
+    LatencyCompensation(float actuation_latency, float observation_latency, double dt) :
+        actuation_latency_(actuation_latency),
+        observation_latency_(observation_latency),
         dt_(dt) {};
     
+    // Mostly for debugging
     float getActuationDelay() {
-        return actuation_delay_;
+        return actuation_latency_;
     }
 
-    void setActuationDelay(float actuation_delay) {
-        actuation_delay_ = actuation_delay;
+    void setActuationDelay(float actuation_latency) {
+        actuation_latency_ = actuation_latency;
     }
 
     float getObservationDelay() {
-        return observation_delay_;
+        return observation_latency_;
     }
 
-    void setObservationDelay(float observation_delay) {
-        observation_delay_ = observation_delay;
+    void setObservationDelay(float observation_latency) {
+        observation_latency_ = observation_latency;
     }
 
     std::queue<Control> getControlQueue() {
@@ -56,14 +57,14 @@ public:
             observation.x,
             observation.y,
             observation.theta,
-            observation.time - observation_delay_
+            observation.time - observation_latency_
         };
     };
 
     Observation getPredictedState() {
         Observation predictedState = last_observation_;
 
-        double control_cutoff_time_ = last_observation_.time - actuation_delay_;
+        double control_cutoff_time_ = last_observation_.time - actuation_latency_;
 
         while (control_queue_.size() > 0 && control_queue_.front().time < control_cutoff_time_) 
             control_queue_.pop();
@@ -79,8 +80,8 @@ public:
     }
 
 private:
-    float actuation_delay_;
-    float observation_delay_;
+    float actuation_latency_;
+    float observation_latency_;
     double dt_;
     std::queue<Control> control_queue_;
     Observation last_observation_;
