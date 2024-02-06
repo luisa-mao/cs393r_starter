@@ -45,7 +45,7 @@ void setPathOption(navigation::PathOption& path_option,
     if (curvature == 0) {
         path_option.free_path_length = 20;  // some large number
         for (auto p: point_cloud) {
-            if (curvature == 0 && robot_config.width/2 >= abs(p[1]) && 0 <= p[0]
+            if (curvature == 0 && robot_config.width/2 + robot_config.safety_margin >= abs(p[1]) && 0 <= p[0]
                 && p[0] < path_option.free_path_length) {
                 path_option.free_path_length = p[0] - h;
                 path_option.obstruction = p;
@@ -55,15 +55,15 @@ void setPathOption(navigation::PathOption& path_option,
     }
 
     Vector2f c = Vector2f(0, 1 / curvature);
-    float r_inner = c.norm() - robot_config.width / 2;
-    float r_outer = c.norm() + robot_config.width / 2;
-    float r_tl = (Vector2f(0, r_inner) - Vector2f(h, 0)).norm();
-    float r_tr = (Vector2f(0, r_outer) - Vector2f(h, 0)).norm();
-    float r_br = (Vector2f(0, r_outer) - Vector2f(robot_config.base_link_offset, 0)).norm();
+    float r_inner = c.norm() - robot_config.width / 2 - robot_config.safety_margin;
+    float r_outer = c.norm() + robot_config.width / 2 + robot_config.safety_margin;
+    float r_tl = (Vector2f(0, r_inner) - Vector2f(h + robot_config.safety_margin, 0)).norm();
+    float r_tr = (Vector2f(0, r_outer) - Vector2f(h + robot_config.safety_margin, 0)).norm();
+    float r_br = (Vector2f(0, r_outer) - Vector2f(robot_config.base_link_offset + robot_config.safety_margin, 0)).norm();
     path_option.free_path_length = std::min(M_PI * c.norm(), 20.0);  // some large number
     // float omega = atan2(h, r_inner);
 
-    float theta_br = asin(robot_config.base_link_offset / r_br); // angle where back right would hit
+    float theta_br = asin(robot_config.base_link_offset + robot_config.safety_margin / r_br); // angle where back right would hit
     float phi = 0;
 
     for (unsigned int i = 0; i < point_cloud.size(); i++) {
