@@ -34,6 +34,7 @@
 #include "navigation.h"
 #include "visualization/visualization.h"
 #include "path_options.h"
+#include "latency_compensation.h"
 
 using Eigen::Vector2f;
 using amrl_msgs::AckermannCurvatureDriveMsg;
@@ -70,7 +71,9 @@ Navigation::Navigation(const string& map_name, ros::NodeHandle* n) :
     robot_omega_(0),
     nav_complete_(true),
     nav_goal_loc_(0, 0),
-    nav_goal_angle_(0) {
+    nav_goal_angle_(0),
+    latency_compensation_(new LatencyCompensation(0, 0)) 
+  {
   map_.Load(GetMapFileFromName(map_name));
   drive_pub_ = n->advertise<AckermannCurvatureDriveMsg>(
       "ackermann_curvature_drive", 1);
@@ -114,9 +117,13 @@ void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
   point_cloud_ = cloud;                                     
 }
 
+void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensation) {
+  latency_compensation_ = latency_compensation;
+}
+
 void Navigation::Run() {
   // This function gets called 20 times a second to form the control loop.
-  
+
   // Clear previous visualizations.
   visualization::ClearVisualizationMsg(local_viz_msg_);
   visualization::ClearVisualizationMsg(global_viz_msg_);
@@ -156,14 +163,6 @@ void Navigation::Run() {
     
   visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
-// Add timestamps to all messages.
-local_viz_msg_.header.stamp = ros::Time::now();
-global_viz_msg_.header.stamp = ros::Time::now();
-drive_msg_.header.stamp = ros::Time::now();
-// Publish messages.
-viz_pub_.publish(local_viz_msg_);
-viz_pub_.publish(global_viz_msg_);
-drive_pub_.publish(drive_msg_);
   // Add timestamps to all messages.
   local_viz_msg_.header.stamp = ros::Time::now();
   global_viz_msg_.header.stamp = ros::Time::now();
@@ -172,6 +171,13 @@ drive_pub_.publish(drive_msg_);
   viz_pub_.publish(local_viz_msg_);
   viz_pub_.publish(global_viz_msg_);
   drive_pub_.publish(drive_msg_);
+  // Record control for latency compensation
+  Control control = {drive_msg_.velocity, drive_msg_.curvature, drive_msg_.header.stamp};
+  latency_compensation_->recordControl(control);
+  cout << latency_compensation_->getControlQueue().size() << endl;
+  if (latency_compensation_->getControlQueue().size() == 100) {
+    exit(0);
+  }
 }
 
 }  // namespace navigation

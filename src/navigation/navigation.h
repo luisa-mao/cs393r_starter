@@ -24,6 +24,7 @@
 #include "eigen3/Eigen/Dense"
 
 #include "vector_map/vector_map.h"
+#include "latency_compensation.h"
 
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
@@ -62,6 +63,10 @@ struct NavigationParams {
   float  width = 0.25f;
   float  length = 0.50f;
   float  base_link_offset = 0; // make this 0 for now
+
+  // delays
+  float actuation_delay = 0.2f;
+  float observation_delay = 0.6f;
 };
 
 class Navigation {
@@ -87,6 +92,9 @@ class Navigation {
   void Run();
   // Used to set the next target pose.
   void SetNavGoal(const Eigen::Vector2f& loc, float angle);
+
+  // // Set the latency compensation object.
+  void SetLatencyCompensation(LatencyCompensation* latency_compensation);
 
  private:
 
@@ -126,6 +134,9 @@ class Navigation {
 
   // robot config
   NavigationParams robot_config_;
+
+  // Latency compensation
+  LatencyCompensation* latency_compensation_;
 };
 
 
