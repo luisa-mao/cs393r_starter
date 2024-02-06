@@ -72,7 +72,7 @@ Navigation::Navigation(const string& map_name, ros::NodeHandle* n) :
     nav_complete_(true),
     nav_goal_loc_(0, 0),
     nav_goal_angle_(0),
-    latency_compensation_(new LatencyCompensation(0, 0)) 
+    latency_compensation_(new LatencyCompensation(0, 0, 0)) 
   {
   map_.Load(GetMapFileFromName(map_name));
   drive_pub_ = n->advertise<AckermannCurvatureDriveMsg>(
@@ -108,8 +108,10 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
     odom_angle_ = angle;
     return;
   }
-  odom_loc_ = loc;
-  odom_angle_ = angle;
+  latency_compensation_->recordObservation({loc[0], loc[1], angle, ros::Time::now().toSec()});
+  Observation predictedState = latency_compensation_->getPredictedState();
+  odom_loc_ = {predictedState.x, predictedState.y};
+  odom_angle_ = predictedState.theta;
 }
 
 void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
@@ -119,6 +121,15 @@ void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
 
 void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensation) {
   latency_compensation_ = latency_compensation;
+}
+
+// Convert (velocity, curvature) to (x_dot, y_dot, omega)
+Control Navigation::GetCartesianControl(float velocity, float curvature, double time) {
+  float x_dot = velocity * cos(curvature);
+  float y_dot = velocity * sin(curvature);
+  float omega = velocity * curvature;
+
+  return {x_dot, y_dot, omega, time};
 }
 
 void Navigation::Run() {
@@ -172,9 +183,10 @@ void Navigation::Run() {
   viz_pub_.publish(global_viz_msg_);
   drive_pub_.publish(drive_msg_);
   // Record control for latency compensation
-  Control control = {drive_msg_.velocity, drive_msg_.curvature, drive_msg_.header.stamp};
+  Control control = GetCartesianControl(drive_msg_.velocity, drive_msg_.curvature, drive_msg_.header.stamp.toSec());
   latency_compensation_->recordControl(control);
-  cout << latency_compensation_->getControlQueue().size() << endl;
+
+  // Hack because ssh -X is slow
   if (latency_compensation_->getControlQueue().size() == 100) {
     exit(0);
   }
