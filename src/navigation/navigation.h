@@ -65,8 +65,8 @@ struct NavigationParams {
   float  base_link_offset = 0; // make this 0 for now
 
   // delays
-  float actuation_delay = 0.2f;
-  float observation_delay = 0.6f;
+  float actuation_latency = 0.3f;
+  float observation_latency = 0.1f;
 };
 
 class Navigation {
