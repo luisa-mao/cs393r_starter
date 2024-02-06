@@ -96,6 +96,8 @@ class Navigation {
   // // Set the latency compensation object.
   void SetLatencyCompensation(LatencyCompensation* latency_compensation);
 
+  Control GetCartesianControl(float velocity, float curvature, double time);
+
  private:
 
   // Whether odometry has been initialized.
