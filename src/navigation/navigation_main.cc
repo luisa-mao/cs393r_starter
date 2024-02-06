@@ -48,6 +48,7 @@
 #include "std_msgs/String.h"
 
 #include "navigation.h"
+#include "latency_compensation.h"
 
 using amrl_msgs::Localization2DMsg;
 using math_util::DegToRad;
@@ -101,9 +102,9 @@ void LaserCallback(const sensor_msgs::LaserScan& msg) {
   // save the pointcloud in the robot's frame
   point_cloud_.clear();
   for (size_t i = 0; i < msg.ranges.size(); i++) {
-    if (msg.ranges[i] < msg.range_max) {
+    if (msg.ranges[i] > msg.range_min && msg.ranges[i] < msg.range_max) {
       const float angle = msg.angle_min + i * msg.angle_increment;
-      const Vector2f point(msg.ranges[i] * cos(angle), msg.ranges[i] * sin(angle));
+      const Vector2f point(kLaserLoc[0] + msg.ranges[i] * cos(angle), kLaserLoc[1] + msg.ranges[i] * sin(angle)); // Was not added before, need to verify
       // const Vector2f point(msg.ranges[i] * sin(angle), -msg.ranges[i] * cos(angle));
       point_cloud_.push_back(point);
     }
@@ -160,6 +161,8 @@ int main(int argc, char** argv) {
   ros::NodeHandle n;
   navigation_ = new Navigation(FLAGS_map, &n);
   robot_config_ = new NavigationParams();
+  cout << robot_config_->actuation_delay << endl;
+  navigation_->SetLatencyCompensation(new LatencyCompensation(robot_config_->actuation_delay, robot_config_->observation_delay));
 
   ros::Subscriber string_sub = 
       n.subscribe("string_topic", 1, &StringCallback);
