@@ -133,7 +133,7 @@ void Navigation::Run() {
   // drive_msg_.curvature = ...;
   // drive_msg_.velocity = ...;
   float current_speed = robot_vel_.norm();
-
+  // cout << current_speed << endl;
   // distance_traveled_ += current_speed * robot_config_.dt;
   // float dist_to_go = (10 - distance_traveled_); // hard code to make it go 10 forward
   // float cmd_vel = run1DTimeOptimalControl(dist_to_go, current_speed, robot_config_);
@@ -143,6 +143,8 @@ void Navigation::Run() {
 
   drive_msg_.curvature = path_options[best_path].curvature;
   drive_msg_.velocity = run1DTimeOptimalControl(path_options[best_path].free_path_length, current_speed, robot_config_);
+	
+  // cout << drive_msg_.curvature << " " << drive_msg_.velocity << endl;
 
   // visualization here
   visualization::DrawRectangle(Vector2f(robot_config_.length/2 - robot_config_.base_link_offset, 0),
@@ -164,14 +166,7 @@ drive_msg_.header.stamp = ros::Time::now();
 viz_pub_.publish(local_viz_msg_);
 viz_pub_.publish(global_viz_msg_);
 drive_pub_.publish(drive_msg_);
-  // Add timestamps to all messages.
-  local_viz_msg_.header.stamp = ros::Time::now();
-  global_viz_msg_.header.stamp = ros::Time::now();
-  drive_msg_.header.stamp = ros::Time::now();
-  // Publish messages.
-  viz_pub_.publish(local_viz_msg_);
-  viz_pub_.publish(global_viz_msg_);
-  drive_pub_.publish(drive_msg_);
+}
 }
 
-}  // namespace navigation
+  // namespace navigation
