@@ -112,6 +112,8 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
   Observation predictedState = latency_compensation_->getPredictedState();
   odom_loc_ = {predictedState.x, predictedState.y};
   odom_angle_ = predictedState.theta;
+  robot_vel_ = {predictedState.vx, predictedState.vy};
+  robot_omega_ = predictedState.omega;
 }
 
 void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
@@ -123,13 +125,13 @@ void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensatio
   latency_compensation_ = latency_compensation;
 }
 
-// Convert (velocity, curvature) to (x_dot, y_dot, omega)
+// Convert (velocity, curvature) to (x_dot, y_dot, theta_dot)
 Control Navigation::GetCartesianControl(float velocity, float curvature, double time) {
   float x_dot = velocity * cos(curvature);
   float y_dot = velocity * sin(curvature);
-  float omega = velocity * curvature;
+  float theta_dot = velocity * curvature;
 
-  return {x_dot, y_dot, omega, time};
+  return {x_dot, y_dot, theta_dot, time};
 }
 
 void Navigation::Run() {
