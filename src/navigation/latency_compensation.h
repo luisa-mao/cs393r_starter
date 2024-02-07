@@ -8,7 +8,7 @@
 struct Control {
     float x_dot;
     float y_dot;
-    float omega;
+    float theta_dot;
     double time;
 };
 
@@ -16,6 +16,9 @@ struct Observation {
     float x;
     float y;
     float theta;
+    float vx;
+    float vy;
+    float omega;
     double time;
 };
 
@@ -52,28 +55,34 @@ public:
     }
 
     // Store last observed state
-    void recordObservation(const Observation& observation) {
-        last_observation_ = {
-            observation.x,
-            observation.y,
-            observation.theta,
-            observation.time - observation_latency_
-        };
+    void recordObservation(float x, float y, float theta, double time) {
+        last_x_ = x;
+        last_y_ = y;
+        last_theta_ = theta;
+        last_observation_time_ = time - observation_latency_;
     };
 
     Observation getPredictedState() {
         Observation predictedState = last_observation_;
 
         double control_cutoff_time_ = last_observation_.time - actuation_latency_;
+        double current_time = ros::Time::now().toSec() - actuation_latency_;
 
         while (control_queue_.size() > 0 && control_queue_.front().time < control_cutoff_time_) 
             control_queue_.pop();
-        
+
+        bool current_found = false;
         while (control_queue_.size() > 0) {
+            if (!current_found && control.time >= current_time) {
+                predictedState.vx = control.x_dot;
+                predictedState.vy = control.y_dot;
+                predictedState.omega = control.theta_dot;
+                current_found = true;
+            }
             Control control = control_queue_.front();
             predictedState.x += control.x_dot * dt_;
             predictedState.y += control.y_dot * dt_;
-            predictedState.theta += control.omega * dt_;
+            predictedState.theta += control.theta_dot * dt_;
             control_queue_.pop();
         }
         return predictedState;
@@ -84,7 +93,11 @@ private:
     float observation_latency_;
     double dt_;
     std::queue<Control> control_queue_;
-    Observation last_observation_;
+    
+    float last_x_;
+    float last_y_;
+    float last_theta_;
+    double last_observation_time_;
 };
 
 #endif  // LATENCY_COMPENSATION_H
