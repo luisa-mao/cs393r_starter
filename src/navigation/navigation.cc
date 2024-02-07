@@ -108,7 +108,7 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
     odom_angle_ = angle;
     return;
   }
-  latency_compensation_->recordObservation({loc[0], loc[1], angle, ros::Time::now().toSec()});
+  latency_compensation_->recordObservation(loc[0], loc[1], angle, ros::Time::now().toSec());
   Observation predictedState = latency_compensation_->getPredictedState();
   odom_loc_ = {predictedState.x, predictedState.y};
   odom_angle_ = predictedState.theta;

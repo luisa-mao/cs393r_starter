@@ -63,9 +63,9 @@ public:
     };
 
     Observation getPredictedState() {
-        Observation predictedState = last_observation_;
-	cout << "last observed state: " << last_observation_.x << " " << last_observation_.y << endl;
-        double control_cutoff_time_ = last_observation_.time - actuation_latency_;
+        Observation predictedState = {last_x_, last_y_, last_theta_, 0.0, 0.0, 0.0, last_observation_time_};
+	// cout << "last observed state: " << last_observation_.x << " " << last_observation_.y << endl;
+        double control_cutoff_time_ = last_observation_time_ - actuation_latency_;
         double current_time = ros::Time::now().toSec() - actuation_latency_;
 
         while (control_queue_.size() > 0 && control_queue_.front().time < control_cutoff_time_) 
@@ -73,13 +73,13 @@ public:
 
         bool current_found = false;
         while (control_queue_.size() > 0) {
+	    Control control = control_queue_.front();
             if (!current_found && control.time >= current_time) {
                 predictedState.vx = control.x_dot;
                 predictedState.vy = control.y_dot;
                 predictedState.omega = control.theta_dot;
                 current_found = true;
             }
-            Control control = control_queue_.front();
             predictedState.x += control.x_dot * dt_;
             predictedState.y += control.y_dot * dt_;
             predictedState.theta += control.theta_dot * dt_;
