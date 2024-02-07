@@ -191,7 +191,8 @@ void Navigation::Run() {
   // Hack because ssh -X is slow
   // if (latency_compensation_->getControlQueue().size() == 100) {
   //  exit(0);
-  //}
+}
+
 }
 
   // namespace navigation

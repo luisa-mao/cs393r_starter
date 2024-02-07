@@ -63,7 +63,7 @@ public:
 
     Observation getPredictedState() {
         Observation predictedState = last_observation_;
-
+	cout << "last observed state: " << last_observation_.x << " " << last_observation_.y << endl;
         double control_cutoff_time_ = last_observation_.time - actuation_latency_;
 
         while (control_queue_.size() > 0 && control_queue_.front().time < control_cutoff_time_) 
@@ -76,6 +76,8 @@ public:
             predictedState.theta += control.omega * dt_;
             control_queue_.pop();
         }
+
+	cout << "predicted state: " << predictedState.x << " " << predictedState.y << endl;
         return predictedState;
     }
 
