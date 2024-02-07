@@ -48,25 +48,28 @@ struct NavigationParams {
   // frequency
   float dt = .05f;
   // max velocity
-  float max_vel = 5.0f;
+  float max_vel = 1.0f;
   // max acceleration
-  float max_accel = 1.0f;
-  float max_decel = 1.0f;
+  float max_accel = 4.0f;
+  float max_decel = 4.0f;
   // max angular velocity
   float max_omega = 1.0f;
   // max angular acceleration
   float max_alpha = 1.0f;
   // max curvature
-  float max_curvature = 1.5f;
+  float max_curvature = 1.0f;
+  // safety margin
+  float safety_margin = 0.1f;
 
   // robot dimensions
-  float  width = 0.25f;
-  float  length = 0.50f;
-  float  base_link_offset = 0; // make this 0 for now
+  float  width = 0.281f;
+  float  length = 0.535f;
+  float  wheelbase = 0.324f;
+  float  base_link_offset = 0.106f; // make this 0 for now
 
   // delays
-  float actuation_latency = 0.3f;
-  float observation_latency = 0.1f;
+  float actuation_latency = 0.2f;
+  float observation_latency = 0.0f;
 };
 
 class Navigation {

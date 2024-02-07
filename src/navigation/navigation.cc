@@ -153,7 +153,7 @@ void Navigation::Run() {
   // drive_msg_.curvature = ...;
   // drive_msg_.velocity = ...;
   float current_speed = robot_vel_.norm();
-
+  // cout << current_speed << endl;
   // distance_traveled_ += current_speed * robot_config_.dt;
   // float dist_to_go = (10 - distance_traveled_); // hard code to make it go 10 forward
   // float cmd_vel = run1DTimeOptimalControl(dist_to_go, current_speed, robot_config_);
@@ -163,6 +163,8 @@ void Navigation::Run() {
 
   drive_msg_.curvature = path_options[best_path].curvature;
   drive_msg_.velocity = run1DTimeOptimalControl(path_options[best_path].free_path_length, current_speed, robot_config_);
+	
+  // cout << drive_msg_.curvature << " " << drive_msg_.velocity << endl;
 
   // visualization here
   visualization::DrawRectangle(Vector2f(robot_config_.length/2 - robot_config_.base_link_offset, 0),
@@ -189,9 +191,9 @@ void Navigation::Run() {
   latency_compensation_->recordControl(control);
 
   // Hack because ssh -X is slow
-  if (latency_compensation_->getControlQueue().size() == 100) {
-    exit(0);
-  }
+  // if (latency_compensation_->getControlQueue().size() == 100) {
+  //  exit(0);
+  //}
 }
 
-}  // namespace navigation
+  // namespace navigation
