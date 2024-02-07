@@ -73,16 +73,16 @@ void setPathOption(navigation::PathOption& path_option,
         float length = 20;
         if (r_inner <= r_p && r_p <= r_tl) {    // inner side hit
             phi = acos(r_inner / r_p);
-            length = (theta - phi) * r_p;
+            length = (theta - phi) * c.norm();
         }
         else if ((r_inner <= r_p && r_p <= r_br) && (-theta_br <= theta && theta <= theta_br)) {    // outer side hit
             phi = acos(r_p / (c.norm() + robot_config.width / 2));
-            length = (theta - phi) * r_p;
+            length = (theta - phi) * c.norm();
         }
 
         else if (r_tl <= r_p && r_p <= r_tr) {    // front side hit
             phi = asin(h / r_p);
-            length = (theta - phi) * r_p;
+            length = (theta - phi) * c.norm();
         }
         if (length < path_option.free_path_length && length > 0) {
             path_option.free_path_length = length;
