@@ -43,9 +43,8 @@ void setPathOption(navigation::PathOption& path_option,
     path_option.curvature = curvature;
     float h = robot_config.length - robot_config.base_link_offset; // distance from base link to front bumper
     if (curvature == 0) {
-        path_option.free_path_length = 5.0;  // some large number
         for (auto p: point_cloud) {
-            if (curvature == 0 && robot_config.width/2 + robot_config.safety_margin >= abs(p[1]) && 0 <= p[0]
+            if (robot_config.width/2 + robot_config.safety_margin >= abs(p[1])
                 && p[0] < path_option.free_path_length) {
                 path_option.free_path_length = p[0] - h;
                 path_option.obstruction = p;
