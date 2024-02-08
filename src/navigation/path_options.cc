@@ -23,7 +23,7 @@ float run1DTimeOptimalControl(float dist_to_go, float current_speed, const navig
 
     // if dist_to_go is larger than stopping_dist and not at max vel, can accelerate
     if (dist_to_go > accel_stopping_dist && current_speed < max_vel) {
-        return current_speed + max_accel * dt;
+        return std::min(max_vel, current_speed + max_accel * dt);
     }
     else if (dist_to_go > cruise_stopping_dist && current_speed == max_vel) {  // can stop in time and at max vel
                                                                         // probably needs hysteresis
