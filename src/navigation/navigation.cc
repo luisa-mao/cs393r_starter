@@ -174,7 +174,7 @@ void Navigation::Run() {
       visualization::DrawPathOption(path_options[i].curvature, path_options[i].free_path_length, 0, 0x0000FF, false, local_viz_msg_);
   }
   // Draw the best path in red
-  visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, 0, 0xFF0000, false, local_viz_msg_);
+  visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, path_options[best_path].clearance, 0xFF0000, true, local_viz_msg_);
     
   visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
