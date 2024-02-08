@@ -43,12 +43,21 @@ void setPathOption(navigation::PathOption& path_option,
     path_option.curvature = curvature;
     float h = robot_config.length - robot_config.base_link_offset; // distance from base link to front bumper
     if (curvature == 0) {
-        path_option.free_path_length = 5.0;  // some large number
         for (auto p: point_cloud) {
-            if (curvature == 0 && robot_config.width/2 + robot_config.safety_margin >= abs(p[1]) && 0 <= p[0]
+            if (robot_config.width/2 + robot_config.safety_margin >= abs(p[1])
                 && p[0] < path_option.free_path_length) {
                 path_option.free_path_length = p[0] - h;
                 path_option.obstruction = p;
+            }
+        }
+        // clearance
+        for (auto p: point_cloud) {
+            if (p[0] >=0 and p[0] < path_option.free_path_length) {
+                float clearance_p = abs(p[1]);
+                if (clearance_p < path_option.clearance) {
+                    path_option.clearance = clearance_p;
+                    path_option.closest_point = p;
+                }
             }
         }
         return;
@@ -73,12 +82,12 @@ void setPathOption(navigation::PathOption& path_option,
         float theta = curvature < 0 ? atan2(p[0], p[1]- c[1]) : atan2(p[0], c[1] - p[1]); // angle between p and c
         float length = 5.0;
         // cout << "curvature " << curvature << endl;
-	if (r_inner <= r_p && r_p <= r_tl) {    // inner side hit
-            phi = acos(r_inner / r_p);
-            length = (theta - phi) * c.norm();
-	    // inner_side = true;
-            // cout << "inner side hit" << endl;
-	}
+        if (r_inner <= r_p && r_p <= r_tl) {    // inner side hit
+                phi = acos(r_inner / r_p);
+                length = (theta - phi) * c.norm();
+            // inner_side = true;
+                // cout << "inner side hit" << endl;
+        }
         if ((r_inner <= r_p && r_p <= r_br) && (-theta_br <= theta && theta <= theta_br)) {    // outer side hit
             phi = acos(r_p / (c.norm() + robot_config.width / 2));
             length = (theta - phi) * c.norm();
@@ -103,6 +112,27 @@ void setPathOption(navigation::PathOption& path_option,
 	//	cout << "intersecting particle found with outer side" << endl;
 	//if (front_side)
 	//	cout << "intersecting particle found with front side" << endl;
+
+    float theta = M_PI / 2;
+    if (path_option.obstruction != Eigen::Vector2f::Zero()) {
+        theta = curvature < 0 ? atan2(path_option.obstruction[0], path_option.obstruction[1]- c[1]) :
+            atan2(path_option.obstruction[0], c[1] - path_option.obstruction[1]);
+    }
+    // clearance
+    // path_option.clearance = 100; // some large number
+    for (auto p: point_cloud) {
+        float theta_p =  curvature < 0 ? atan2(p[0], p[1]- c[1]) :
+            atan2(p[0], c[1] - p[1]);
+        if (theta_p >=0 and theta_p < (theta - phi)) {  // if p is within the fp length
+            float inner = abs((c - p).norm() - r_inner);
+            float outer = abs((c - p).norm() - r_tl);
+            float clearance_p = std::min(inner, outer);
+            if (clearance_p < path_option.clearance) {
+                path_option.clearance = clearance_p;
+                path_option.closest_point = p;
+            }
+        }
+    }
 }
 
 

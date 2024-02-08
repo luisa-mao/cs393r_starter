@@ -24,6 +24,7 @@
 #include "eigen3/Eigen/Dense"
 
 #include "vector_map/vector_map.h"
+#include "latency_compensation.h"
 
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
@@ -35,11 +36,11 @@ namespace ros {
 namespace navigation {
 
 struct PathOption {
-  float curvature;
-  float clearance;
-  float free_path_length;
-  Eigen::Vector2f obstruction;
-  Eigen::Vector2f closest_point;
+  float curvature = 0;
+  float clearance = 100;
+  float free_path_length = 100;
+  Eigen::Vector2f obstruction = Eigen::Vector2f::Zero();
+  Eigen::Vector2f closest_point = Eigen::Vector2f::Zero();
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 };
 
@@ -65,6 +66,10 @@ struct NavigationParams {
   float  length = 0.535f;
   float  wheelbase = 0.324f;
   float  base_link_offset = 0.106f; // make this 0 for now
+
+  // delays
+  float actuation_latency = 0.5f;
+  float observation_latency = 0.2f;
 };
 
 class Navigation {
@@ -90,6 +95,11 @@ class Navigation {
   void Run();
   // Used to set the next target pose.
   void SetNavGoal(const Eigen::Vector2f& loc, float angle);
+
+  // // Set the latency compensation object.
+  void SetLatencyCompensation(LatencyCompensation* latency_compensation);
+
+  Control GetCartesianControl(float velocity, float curvature, double time);
 
  private:
 
@@ -129,6 +139,9 @@ class Navigation {
 
   // robot config
   NavigationParams robot_config_;
+
+  // Latency compensation
+  LatencyCompensation* latency_compensation_;
 };
 
 

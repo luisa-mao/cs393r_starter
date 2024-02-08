@@ -34,6 +34,7 @@
 #include "navigation.h"
 #include "visualization/visualization.h"
 #include "path_options.h"
+#include "latency_compensation.h"
 
 using Eigen::Vector2f;
 using amrl_msgs::AckermannCurvatureDriveMsg;
@@ -70,7 +71,9 @@ Navigation::Navigation(const string& map_name, ros::NodeHandle* n) :
     robot_omega_(0),
     nav_complete_(true),
     nav_goal_loc_(0, 0),
-    nav_goal_angle_(0) {
+    nav_goal_angle_(0),
+    latency_compensation_(new LatencyCompensation(0, 0, 0)) 
+  {
   map_.Load(GetMapFileFromName(map_name));
   drive_pub_ = n->advertise<AckermannCurvatureDriveMsg>(
       "ackermann_curvature_drive", 1);
@@ -105,8 +108,12 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
     odom_angle_ = angle;
     return;
   }
-  odom_loc_ = loc;
-  odom_angle_ = angle;
+  latency_compensation_->recordObservation(loc[0], loc[1], angle, ros::Time::now().toSec());
+  Observation predictedState = latency_compensation_->getPredictedState();
+  odom_loc_ = {predictedState.x, predictedState.y};
+  odom_angle_ = predictedState.theta;
+  robot_vel_ = {predictedState.vx, predictedState.vy};
+  robot_omega_ = predictedState.omega;
 }
 
 void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
@@ -114,9 +121,22 @@ void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
   point_cloud_ = cloud;                                     
 }
 
+void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensation) {
+  latency_compensation_ = latency_compensation;
+}
+
+// Convert (velocity, curvature) to (x_dot, y_dot, theta_dot)
+Control Navigation::GetCartesianControl(float velocity, float curvature, double time) {
+  float x_dot = velocity * cos(curvature);
+  float y_dot = velocity * sin(curvature);
+  float theta_dot = velocity * curvature;
+
+  return {x_dot, y_dot, theta_dot, time};
+}
+
 void Navigation::Run() {
   // This function gets called 20 times a second to form the control loop.
-  
+
   // Clear previous visualizations.
   visualization::ClearVisualizationMsg(local_viz_msg_);
   visualization::ClearVisualizationMsg(global_viz_msg_);
@@ -154,7 +174,12 @@ void Navigation::Run() {
       visualization::DrawPathOption(path_options[i].curvature, path_options[i].free_path_length, 0, 0x0000FF, false, local_viz_msg_);
   }
   // Draw the best path in red
-  visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, 0, 0xFF0000, false, local_viz_msg_);
+  visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, path_options[best_path].clearance, 0xFF0000, true, local_viz_msg_);
+  // for debugging
+  
+  if (path_options[best_path].clearance < 0) {
+    cout << "Clearance is negative: " << path_options[best_path].clearance << endl;
+  }
     
   visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
@@ -166,6 +191,15 @@ void Navigation::Run() {
   viz_pub_.publish(local_viz_msg_);
   viz_pub_.publish(global_viz_msg_);
   drive_pub_.publish(drive_msg_);
+  // Record control for latency compensation
+  Control control = GetCartesianControl(drive_msg_.velocity, drive_msg_.curvature, drive_msg_.header.stamp.toSec());
+  latency_compensation_->recordControl(control);
+
+  // Hack because ssh -X is slow
+  // if (latency_compensation_->getControlQueue().size() == 100) {
+  //  exit(0);
+}
+
 }
 
 } // namespace navigation
