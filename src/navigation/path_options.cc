@@ -53,10 +53,12 @@ void setPathOption(navigation::PathOption& path_option,
         }
         // clearance
         for (auto p: point_cloud) {
-            float clearance_p = abs(p[1]) - robot_config.width/2 - robot_config.safety_margin;
-            if (clearance_p < path_option.clearance) {
-                path_option.clearance = clearance_p;
-                path_option.closest_point = p;
+            if (p[x] >=0 and p[x] < path_option.free_path_length) {
+                float clearance_p = abs(p[1]) - robot_config.width/2 - robot_config.safety_margin;
+                if (clearance_p < path_option.clearance) {
+                    path_option.clearance = clearance_p;
+                    path_option.closest_point = p;
+                }
             }
         }
         return;
