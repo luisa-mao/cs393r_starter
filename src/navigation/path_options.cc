@@ -104,7 +104,7 @@ void setPathOption(navigation::PathOption& path_option,
 	//if (front_side)
 	//	cout << "intersecting particle found with front side" << endl;
 
-    theta = curvature < 0 ? atan2(path_option.obstruction[0], path_option.obstruction[1]- c[1]) :
+    float theta = curvature < 0 ? atan2(path_option.obstruction[0], path_option.obstruction[1]- c[1]) :
          atan2(path_option.obstruction[0], c[1] - path_option.obstruction[1]);
     // clearance
     path_option.clearance = 100; // some large number
