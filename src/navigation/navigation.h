@@ -36,11 +36,11 @@ namespace ros {
 namespace navigation {
 
 struct PathOption {
-  float curvature;
-  float clearance;
-  float free_path_length;
-  Eigen::Vector2f obstruction;
-  Eigen::Vector2f closest_point;
+  float curvature = 0;
+  float clearance = 100;
+  float free_path_length = 100;
+  Eigen::Vector2f obstruction = Eigen::Vector2f::Zero();
+  Eigen::Vector2f closest_point = Eigen::Vector2f::Zero();
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 };
 

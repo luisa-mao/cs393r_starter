@@ -51,6 +51,14 @@ void setPathOption(navigation::PathOption& path_option,
                 path_option.obstruction = p;
             }
         }
+        // clearance
+        for (auto p: point_cloud) {
+            float clearance_p = abs(p[1]) - robot_config.width/2 - robot_config.safety_margin;
+            if (clearance_p < path_option.clearance) {
+                path_option.clearance = clearance_p;
+                path_option.closest_point = p;
+            }
+        }
         return;
     }
 
@@ -104,15 +112,18 @@ void setPathOption(navigation::PathOption& path_option,
 	//if (front_side)
 	//	cout << "intersecting particle found with front side" << endl;
 
-    float theta = curvature < 0 ? atan2(path_option.obstruction[0], path_option.obstruction[1]- c[1]) :
-         atan2(path_option.obstruction[0], c[1] - path_option.obstruction[1]);
+    float theta = M_PI / 2;
+    if (path_option.obstruction != Eigen::Vector2f::Zero()) {
+        theta = curvature < 0 ? atan2(path_option.obstruction[0], path_option.obstruction[1]- c[1]) :
+            atan2(path_option.obstruction[0], c[1] - path_option.obstruction[1]);
+    }
     // clearance
-    path_option.clearance = 100; // some large number
+    // path_option.clearance = 100; // some large number
     for (auto p: point_cloud) {
         float theta_p = atan2(p[0], p[1]);
         if (theta_p >=0 and theta_p < (theta - phi)) {  // if p is within the fp length
             float inner = abs((c - p).norm() - r_inner);
-            float outer = abs((c - p).norm() - r_outer);
+            float outer = abs((c - p).norm() - r_tl);
             float clearance_p = std::min(inner, outer);
             if (clearance_p < path_option.clearance) {
                 path_option.clearance = clearance_p;
