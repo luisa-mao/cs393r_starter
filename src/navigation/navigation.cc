@@ -158,15 +158,14 @@ void Navigation::Run() {
     
   visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
-// Add timestamps to all messages.
-local_viz_msg_.header.stamp = ros::Time::now();
-global_viz_msg_.header.stamp = ros::Time::now();
-drive_msg_.header.stamp = ros::Time::now();
-// Publish messages.
-viz_pub_.publish(local_viz_msg_);
-viz_pub_.publish(global_viz_msg_);
-drive_pub_.publish(drive_msg_);
-}
+  // Add timestamps to all messages.
+  local_viz_msg_.header.stamp = ros::Time::now();
+  global_viz_msg_.header.stamp = ros::Time::now();
+  drive_msg_.header.stamp = ros::Time::now();
+  // Publish messages.
+  viz_pub_.publish(local_viz_msg_);
+  viz_pub_.publish(global_viz_msg_);
+  drive_pub_.publish(drive_msg_);
 }
 
-  // namespace navigation
+} // namespace navigation
