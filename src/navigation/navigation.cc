@@ -115,12 +115,12 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
   robot_vel_ = {predictedState.vx, predictedState.vy};
   robot_omega_ = predictedState.omega;
 
-  point_cloud_ = latency_compensation_->forward_predict_point_cloud(point_cloud_, loc[0], loc[1], angle);
+  point_cloud_ = latency_compensation_->forward_predict_point_cloud(point_cloud_, predictedState.x, predictedState.y, predictedState.theta);
 }
 
 void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
                                    double time) {
-  point_cloud_ = latency_compensation_->forward_predict_point_cloud(cloud, time);                            
+  point_cloud_ = cloud;                            
 }
 
 void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensation) {
@@ -200,8 +200,6 @@ void Navigation::Run() {
   // Hack because ssh -X is slow
   // if (latency_compensation_->getControlQueue().size() == 100) {
   //  exit(0);
-}
-
 }
 
 } // namespace navigation

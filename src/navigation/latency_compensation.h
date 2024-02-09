@@ -1,6 +1,7 @@
 #include <queue>
 #include "amrl_msgs/AckermannCurvatureDriveMsg.h"
 #include "ros/ros.h"
+#include "eigen3/Eigen/Dense"
 
 #ifndef LATENCY_COMPENSATION_H
 #define LATENCY_COMPENSATION_H
@@ -90,15 +91,15 @@ public:
         return predictedState;
     }
 
-    std::vector<Vector2f> forward_predict_point_cloud(const std::vector<Vector2f>& point_cloud, float predicted_x, float predicted_y, float predicted_theta) {
+    std::vector<Eigen::Vector2f> forward_predict_point_cloud(const std::vector<Eigen::Vector2f>& point_cloud, float predicted_x, float predicted_y, float predicted_theta) {
         float x_shift = predicted_x - last_x_;
         float y_shift = predicted_y - last_y_;
         float theta_shift = predicted_theta - last_theta_;
-        std::vector<Vector2f> predicted_point_cloud;
+        std::vector<Eigen::Vector2f> predicted_point_cloud;
         for (auto p: point_cloud) {
             float x = p[0] * cos(theta_shift) + p[1] * sin(theta_shift) - x_shift;
             float y = -1 * p[0] * sin(theta_shift) + p[1] * cos(theta_shift) - y_shift;
-            predicted_point_cloud.push_back(Vector2f(x, y));
+            predicted_point_cloud.push_back(Eigen::Vector2f(x, y));
         }
         return predicted_point_cloud;
     }
