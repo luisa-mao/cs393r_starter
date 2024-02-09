@@ -86,7 +86,7 @@ public:
             control_queue_.pop();
         }
 
-	cout << "predicted state: " << predictedState.x << " " << predictedState.y << endl;
+	// cout << "predicted state: " << predictedState.x << " " << predictedState.y << endl;
         return predictedState;
     }
 

@@ -175,11 +175,12 @@ void Navigation::Run() {
   }
   // Draw the best path in red
   visualization::DrawPathOption(path_options[best_path].curvature, path_options[best_path].free_path_length, path_options[best_path].clearance, 0xFF0000, true, local_viz_msg_);
+// Find the closest point in the point cloud
+
+  // Plot the closest point in purple
+  visualization::DrawLine(path_options[best_path].closest_point, Vector2f(0, 1/path_options[best_path].curvature), 0xFF00FF, local_viz_msg_);
   // for debugging
   
-  if (path_options[best_path].clearance < 0) {
-    cout << "Clearance is negative: " << path_options[best_path].clearance << endl;
-  }
     
   visualization::DrawPoint(Vector2f(0, 1/path_options[best_path].curvature), 0x0000FF, local_viz_msg_);
 
