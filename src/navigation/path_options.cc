@@ -46,7 +46,7 @@ void setPathOption(navigation::PathOption& path_option,
         for (auto p: point_cloud) {
             if (robot_config.width/2 + robot_config.safety_margin >= abs(p[1])
                 && p[0] < path_option.free_path_length) {
-                path_option.free_path_length = p[0] - h;
+                path_option.free_path_length = p[0] - h - robot_config.safety_margin;
                 path_option.obstruction = p;
             }
         }
