@@ -163,18 +163,24 @@ vector<navigation::PathOption> samplePathOptions(int num_options,
     return path_options;
 }
 
+
+float score(float free_path_length, float curvature, float clearance) {
+    const float w1 = 1;
+    const float w2 = 0;
+    const float w3 = 0;
+    return w1 * free_path_length + w2 * abs(1/curvature) + w3 * clearance;
+}
+
 // returns the index of the selected path
 // for now, just return the index of the path with the longest free path length
 // if there are multiple paths with the same free path length, return the one with the smallest curvature
 int selectPath(const vector<navigation::PathOption>& path_options) {
     int selected_path = 0;
-    float max_free_path_length = 0;
-    float min_curvature = 100; // some large number
+    float best_score = 0;
     for (unsigned int i = 0; i < path_options.size(); i++) {
-        if (path_options[i].free_path_length > max_free_path_length || 
-            (path_options[i].free_path_length == max_free_path_length && abs(path_options[i].curvature) < min_curvature)){
-            max_free_path_length = path_options[i].free_path_length;
-            min_curvature = abs(path_options[i].curvature);
+        float s = score(path_options[i].free_path_length, path_options[i].curvature, path_options[i].clearance);
+        if (s > best_score) {
+            best_score = s;
             selected_path = i;
         }
     }
