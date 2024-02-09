@@ -114,11 +114,13 @@ void Navigation::UpdateOdometry(const Vector2f& loc,
   odom_angle_ = predictedState.theta;
   robot_vel_ = {predictedState.vx, predictedState.vy};
   robot_omega_ = predictedState.omega;
+
+  point_cloud_ = latency_compensation_->forward_predict_point_cloud(point_cloud_, loc[0], loc[1], angle);
 }
 
 void Navigation::ObservePointCloud(const vector<Vector2f>& cloud,
                                    double time) {
-  point_cloud_ = cloud;                                     
+  point_cloud_ = latency_compensation_->forward_predict_point_cloud(cloud, time);                            
 }
 
 void Navigation::SetLatencyCompensation(LatencyCompensation* latency_compensation) {
