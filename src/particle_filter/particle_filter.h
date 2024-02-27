@@ -39,6 +39,21 @@ struct Particle {
   double weight;
 };
 
+// hard coding here for now, will be replaced by a config file
+struct ParticleFilterParams {
+  // Number of particles to use.
+  int num_particles = 100;
+  // coeffs for the motion model
+  float k1 = 0.1; // translation error from translation coeff
+  float k2 = 0.1; // rotation error from translation coeff
+  float k3 = 0.1; // translation error from rotation coeff
+  float k4 = 0.1; // rotation error from rotation coeff
+  // Standard deviation of the observation model.
+  float observation_model_stddev = 0.1;
+  // Standard deviation of the resampling model.
+  float resample_stddev = 0.1;
+};
+
 class ParticleFilter {
  public:
   // Default Constructor.
@@ -92,6 +107,9 @@ class ParticleFilter {
   // List of particles being tracked.
   std::vector<Particle> particles_;
 
+  // Parameters for the particle filter.
+  ParticleFilterParams params_;
+
   // Map of the environment.
   vector_map::VectorMap map_;
 
@@ -103,6 +121,8 @@ class ParticleFilter {
   float prev_odom_angle_;
   bool odom_initialized_;
 };
-}  // namespace slam
+
+
+}  // namespace particle_filter
 
 #endif   // SRC_PARTICLE_FILTER_H_

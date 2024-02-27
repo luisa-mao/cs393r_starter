@@ -160,13 +160,26 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // Implement the motion model predict step here, to propagate the particles
   // forward based on odometry.
 
+  for (Particle& p : particles_) {
+    Vector2f delta(odom_loc - p.loc());
+    float delta_angle = odom_angle - p.angle;
+    float sigma = k1*delta.norm() + k2*delta_angle;
+    Vector2f epsilon(
+        rng_.Gaussian(0, sigma),
+        rng_.Gaussian(0, sigma));
+    p.loc() += delta + epsilon;
+    p.angle += delta_angle + rng_.Gaussian(0, k3*delta.norm() + k4*delta_angle);
+  }
+  prev_odom_loc_ = odom_loc;
+  prev_odom_angle_ = odom_angle;
+
 
   // You will need to use the Gaussian random number generator provided. For
   // example, to generate a random number from a Gaussian with mean 0, and
   // standard deviation 2:
-  float x = rng_.Gaussian(0.0, 2.0);
-  printf("Random number drawn from Gaussian distribution with 0 mean and "
-         "standard deviation of 2 : %f\n", x);
+  // float x = rng_.Gaussian(0.0, 2.0);
+  // printf("Random number drawn from Gaussian distribution with 0 mean and "
+  //        "standard deviation of 2 : %f\n", x);
 }
 
 void ParticleFilter::Initialize(const string& map_file,
