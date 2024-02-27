@@ -137,11 +137,29 @@ void ParticleFilter::Resample() {
   // After resampling:
   // particles_ = new_particles;
 
+  vector<Vector2f> buckets;
+  float total_weight = 0;
+  for (const Particle& p : particles_) {
+    buckets.push_back(Vector2f(total_weight, total_weight + p.weight));
+    total_weight += p.weight;
+  }
+  vector<Particle> new_particles;
+  for (size_t j = 0; j < particles_.size(); ++j) {
+    float r = rng_.UniformRandom(0, total_weight);
+    for (size_t i = 0; i < particles_.size(); ++i) {
+      if (r >= buckets[i].x() && r < buckets[i].y()) {
+        new_particles.push_back(particles_[i]);
+        break;
+      }
+    }
+  }
+  particles_ = new_particles; // does this correctly replace particles_ with new_particles?
+
   // You will need to use the uniform random number generator provided. For
   // example, to generate a random number between 0 and 1:
-  float x = rng_.UniformRandom(0, 1);
-  printf("Random number drawn from uniform distribution between 0 and 1: %f\n",
-         x);
+  // float x = rng_.UniformRandom(0, 1);
+  // printf("Random number drawn from uniform distribution between 0 and 1: %f\n",
+  //        x);
 }
 
 void ParticleFilter::ObserveLaser(const vector<float>& ranges,
@@ -200,6 +218,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // variables to return them. Modify the following assignments:
   loc = Vector2f(0, 0);
   angle = 0;
+  for (const Particle& p : particles_) {
+    loc += p.loc();
+    angle += p.angle;
+  }
+  loc /= particles_.size();
+  angle /= particles_.size();
 }
 
 
