@@ -103,12 +103,66 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
     // of intersection:
     Vector2f intersection_point; // Return variable
     intersects = map_line.Intersection(my_line, &intersection_point);
-    if (intersects) {
-      printf("Intersects at %f,%f\n", 
-             intersection_point.x(),
-             intersection_point.y());
-    } else {
-      printf("No intersection\n");
+
+    // Calculate ray line
+    // Calculate the start point at range_min
+    Eigen::Vector2f start(range_min * cos(angle_min), range_min * sin(angle_min));
+
+    // Calculate the end point at range_max
+    Eigen::Vector2f end(range_max * cos(angle_max), range_max * sin(angle_max));
+
+    // Declare the ray line as line2f variable and initialize with calculated ray start and end points
+    line2f ray_line(start, end);
+
+    // Check if laser ray intersects with map lines
+    Vector2f ray_intersection_point;
+    bool ray_intersects = map_line.Intersects(ray_line);
+
+    // Check for every tenth ray in laser scan, if the laser scan intersects with the map lines
+    for(int i = 0; i < num_ranges; i+=10){
+      if (ray_intersects) {
+        // printf("Intersects at %f,%f\n", 
+        //       ray_intersection_point.x(),
+        //       ray_intersection_point.y());
+
+      // Calculate ray pose in respect to the world frame
+      Eigen::Matrix3f rayWorld;
+      Eigen::Vector3f odom_loc(loc(0), loc(1), 1)
+
+      ray_world << cos(angle), -sin(angle), 0,
+                  sin(angle), cos(angle) ,  0,
+                      0     ,     0      ,  1; 
+
+      // Add odom_loc to colum 2 of rayWorld matrix
+      ray_world.col(2) = odom_loc;
+
+      // Extract the rotation matrix
+      Eigen::Matrix2f R = ray_world.block<2, 2>(0, 0);
+
+      // Define a unit vector pointing in the direction of the ray
+      Eigen::Vector2f direction(1, 0);
+
+      // Rotate the direction vector
+      Eigen::Vector2f rotated_direction = R * direction;
+
+      // Define the start point of the ray line (from odom_loc)
+      Eigen::Vector2f start(odom_loc(0), odom_loc(1));
+
+      // Calculate the end point of the ray line
+      Eigen::Vector2f end = start + rotated_direction;
+
+      // Declare and initialize world ray line
+      line2f ray_world_line(start, end);
+
+      // Find intersection of world ray line with map lines
+      ray_intersects = map_line.Intersection(ray_world_line, &ray_intersection_point);
+
+      // Push back intersection points to scan variable
+      scan.push_back(Vector2f(ray_intersection_point.x(), ray_intersection_point.y()));
+
+      } else {
+        printf("No intersection\n");
+      }
     }
   }
 }
@@ -137,11 +191,29 @@ void ParticleFilter::Resample() {
   // After resampling:
   // particles_ = new_particles;
 
+  vector<Vector2f> buckets;
+  float total_weight = 0;
+  for (const Particle& p : particles_) {
+    buckets.push_back(Vector2f(total_weight, total_weight + p.weight));
+    total_weight += p.weight;
+  }
+  vector<Particle> new_particles;
+  for (size_t j = 0; j < particles_.size(); ++j) {
+    float r = rng_.UniformRandom(0, total_weight);
+    for (size_t i = 0; i < particles_.size(); ++i) {
+      if (r >= buckets[i].x() && r < buckets[i].y()) {
+        new_particles.push_back(particles_[i]);
+        break;
+      }
+    }
+  }
+  particles_ = new_particles; // does this correctly replace particles_ with new_particles?
+
   // You will need to use the uniform random number generator provided. For
   // example, to generate a random number between 0 and 1:
-  float x = rng_.UniformRandom(0, 1);
-  printf("Random number drawn from uniform distribution between 0 and 1: %f\n",
-         x);
+  // float x = rng_.UniformRandom(0, 1);
+  // printf("Random number drawn from uniform distribution between 0 and 1: %f\n",
+  //        x);
 }
 
 void ParticleFilter::ObserveLaser(const vector<float>& ranges,
@@ -200,6 +272,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // variables to return them. Modify the following assignments:
   loc = Vector2f(0, 0);
   angle = 0;
+  for (const Particle& p : particles_) {
+    loc += p.loc();
+    angle += p.angle;
+  }
+  loc /= particles_.size();
+  angle /= particles_.size();
 }
 
 
