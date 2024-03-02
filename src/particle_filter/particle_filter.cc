@@ -179,14 +179,14 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // forward based on odometry.
 
   for (Particle& p : particles_) {
-    Vector2f delta(odom_loc - p.loc());
+    Vector2f delta(odom_loc - p.loc);
     float delta_angle = odom_angle - p.angle;
-    float sigma = k1*delta.norm() + k2*delta_angle;
+    float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
     Vector2f epsilon(
         rng_.Gaussian(0, sigma),
         rng_.Gaussian(0, sigma));
-    p.loc() += delta + epsilon;
-    p.angle += delta_angle + rng_.Gaussian(0, k3*delta.norm() + k4*delta_angle);
+    p.loc += delta + epsilon;
+    p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
   }
   prev_odom_loc_ = odom_loc;
   prev_odom_angle_ = odom_angle;
@@ -219,8 +219,12 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   loc = Vector2f(0, 0);
   angle = 0;
   for (const Particle& p : particles_) {
-    loc += p.loc();
-    angle += p.angle;
+    loc += p.loc;
+    if (p.angle < 0) {
+      angle += p.angle + 2*M_PI;
+    } else {
+      angle += p.angle;
+    }
   }
   loc /= particles_.size();
   angle /= particles_.size();
