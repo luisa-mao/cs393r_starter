@@ -1,226 +1,683 @@
 Initialize 14.7 14.7 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
 PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-PublishPredictedScan robot_loc: 14.700000, 14.700000
-Initialize: GDC1 (-32.490517,10.036736) -158.629379°
-Initialize -32.4905 10.0367 -2.7686
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
-PublishPredictedScan robot_loc: -32.490517, 10.036736
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: 14.700000, 14.700000
+Predict 0 0 0 0
+Predict 0 0 0 0
+Initialize: GDC1 (-28.055016,-0.409967) 0.000000°
+Initialize -28.055 -0.409967 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -28.055016, -0.409967
+Predict 0 0 0 0
+Initialize: GDC1 (-39.415085,6.560108) 25.346176°
+Initialize -39.4151 6.56011 0.442374
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
+Predict 0 0 0 0
+Predict 0 0 0 0
+PublishPredictedScan robot_loc: -39.415085, 6.560108
 Exiting.
-PublishPredictedScan robot_loc: -32.490517, 10.036736

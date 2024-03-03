@@ -237,14 +237,24 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // forward based on odometry.
 
   if (!odom_initialized_) {
+    prev_odom_loc_ = odom_loc;
+    prev_odom_angle_ = odom_angle;
+    odom_initialized_ = true;
     return;
   }
-  return;
+  // return;
   
   // calculate the loc and angle using the map_T_odom transform
   Vector2f delta(odom_loc - prev_odom_loc_);
   float delta_angle = odom_angle - prev_odom_angle_;
   float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
+  // print delta, delta_angle, sigma
+  cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
+  //   prev_odom_loc_ = odom_loc;
+  // prev_odom_angle_ = odom_angle;
+
+  // return;
+
   for (Particle& p : particles_) {
     Vector2f epsilon(
         rng_.Gaussian(0, sigma),
@@ -283,10 +293,6 @@ void ParticleFilter::Initialize(const string& map_file,
     p.angle = angle;
     p.weight = 1.0/params_.num_particles;
   }
-    prev_odom_angle_ = 0;
-    prev_odom_loc_ = Vector2f(0, 0);
-    odom_initialized_ = true;
-
   // print initialize
   cout << "Initialize " << loc.x() << " " << loc.y() << " " << angle << endl;
 }
