@@ -42,7 +42,7 @@ struct Particle {
 // hard coding here for now, will be replaced by a config file
 struct ParticleFilterParams {
   // Number of particles to use.
-  int num_particles = 100;
+  int num_particles = 1;
   // coeffs for the motion model
   float k1 = 0.1; // translation error from translation coeff
   float k2 = 0.1; // rotation error from translation coeff
@@ -50,8 +50,8 @@ struct ParticleFilterParams {
   float k4 = 0.1; // rotation error from rotation coeff
   // Standard deviation of the observation model.
   float observation_model_stddev = 0.1;
-  // Standard deviation of the resampling model.
-  float resample_stddev = 0.1;
+  float observation_model_gamma = 1;
+
 };
 
 class ParticleFilter {
@@ -120,6 +120,8 @@ class ParticleFilter {
   Eigen::Vector2f prev_odom_loc_;
   float prev_odom_angle_;
   bool odom_initialized_;
+
+  const int GAUSSIAN_DIST_COEFF = 1/(params_.observation_model_stddev*sqrt(2*M_PI));
 };
 
 

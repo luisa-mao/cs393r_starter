@@ -110,10 +110,15 @@ void PublishParticles() {
 }
 
 void PublishPredictedScan() {
-  const uint32_t kColor = 0xd67d00;
+  // const uint32_t kColor = 0xd67d00;
+  const uint32_t kColor = 0x00ff00;
+
   Vector2f robot_loc(0, 0);
   float robot_angle(0);
   particle_filter_.GetLocation(&robot_loc, &robot_angle);
+  // Initialize 26.8195 14.3962 0
+  // Vector2f robot_loc(26.8195, 14.3962);
+  // float robot_angle(0);
   vector<Vector2f> predicted_scan;
   particle_filter_.GetPredictedPointCloud(
       robot_loc,
@@ -127,6 +132,8 @@ void PublishPredictedScan() {
   for (const Vector2f& p : predicted_scan) {
     DrawPoint(p, kColor, vis_msg_);
   }
+  // print PublishPredictedScan robot loc
+  printf("PublishPredictedScan robot_loc: %f, %f\n", robot_loc.x(), robot_loc.y());
 }
 
 void PublishTrajectory() {
