@@ -148,13 +148,13 @@ void ParticleFilter::Update(const vector<float>& ranges,
       continue;
     }
     weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i]).norm(), 2);
-    cout << "Weight: " << weight << " ranges "<< ranges[i]<<" predicted scan "<<(predicted_scan[i]-p_ptr->loc).norm()<< endl;
+    // cout << "Weight: " << weight << " ranges "<< ranges[i]<<" predicted scan "<<(predicted_scan[i]-p_ptr->loc).norm()<< endl;
   }
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
   // float coeff = pow(GAUSSIAN_DIST_COEFF, (ranges.size() / 10 * params_.observation_model_gamma));
-  p_ptr->weight = params_.observation_model_gamma * x;
+  p_ptr->weight = -params_.observation_model_gamma * x;
   // print x, p_ptr->weight
-  cout << "Update " << x << " " << p_ptr->weight << endl;
+  cout << "Update "  << " " << p_ptr->weight << endl;
   // print the ranges.size() and predicted_scan.size()
   cout << "ranges.size() " << ranges.size() << " predicted_scan.size() " << predicted_scan.size() << endl;
 }
@@ -170,11 +170,23 @@ void ParticleFilter::Resample() {
   // After resampling:
   // particles_ = new_particles;
 
+  // we find the maximum of the log likelihoods,
+  // then apply a coefficient to give the maximum likelihood a weight of 1
+  // to get rid of the disappearing weights problem
+  float max_weight_ = -INFINITY;
+  for (const Particle& p : particles_) {
+    if (p.weight > max_weight_) {
+      max_weight_ = p.weight;
+    }
+  }
+
   vector<Vector2f> buckets;
   float total_weight = 0;
   for (const Particle& p : particles_) {
-    float weight = exp(p.weight);
+    float weight = exp(p.weight - max_weight_);
     buckets.push_back(Vector2f(total_weight, total_weight + weight));
+    // print each weight
+    cout << "Resample weight: " << (p.weight - max_weight_) << endl;
     total_weight += weight;
   }
   vector<Particle> new_particles;
@@ -193,9 +205,9 @@ void ParticleFilter::Resample() {
   // print the first five resampled particles
   cout << "Resample " ;
   cout<< " total weight "<< total_weight << endl;
-  for (size_t i = 0; i < 5; ++i) {
-    cout << particles_[i].loc.x() << " " << particles_[i].loc.y() << " " << particles_[i].angle << "| ";
-  }
+  for (size_t i = 0; i < particles_.size(); ++i) {
+    cout << "Resample " << particles_[i].loc.x() << " " << particles_[i].loc.y() << " " << particles_[i].angle << " " << particles_[i].weight << endl;
+  }  
   cout << endl;
 
 
@@ -225,7 +237,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   for (Particle& p : particles_) {
     Update(ranges, range_min, range_max, angle_min, angle_max, &p);
   }
-  // Resample();
+  Resample();
   // exit(0);
 }
 
@@ -244,21 +256,18 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   }
   // return;
   
-  // calculate the loc and angle using the map_T_odom transform
   Vector2f delta(odom_loc - prev_odom_loc_);
   float delta_angle = odom_angle - prev_odom_angle_;
   float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
   // print delta, delta_angle, sigma
   cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
-  //   prev_odom_loc_ = odom_loc;
-  // prev_odom_angle_ = odom_angle;
-
-  // return;
 
   for (Particle& p : particles_) {
     Vector2f epsilon(
         rng_.Gaussian(0, sigma),
         rng_.Gaussian(0, sigma));
+    // transform the delta to the world frame
+    delta = Vector2f(delta.x()*cos(p.angle - prev_odom_angle_) - delta.y()*sin(p.angle - prev_odom_angle_), delta.x()*sin(p.angle - prev_odom_angle_) + delta.y()*cos(p.angle - prev_odom_angle_));
     p.loc += delta + epsilon;
     p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
     // ensure angle is between 0 and 2pi
@@ -288,6 +297,8 @@ void ParticleFilter::Initialize(const string& map_file,
   // some distribution around the provided location and angle.
   map_.Load(map_file);
   particles_.resize(params_.num_particles);
+  odom_initialized_ = false;
+
   for (Particle& p : particles_) {
     p.loc = loc;
     p.angle = angle;
@@ -302,7 +313,7 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   if (!odom_initialized_) {
     return;
   }
-
+  return;
   Vector2f& loc = *loc_ptr;
   float& angle = *angle_ptr;
   loc = particles_[0].loc;

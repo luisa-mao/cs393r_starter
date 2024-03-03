@@ -133,7 +133,7 @@ void PublishPredictedScan() {
     DrawPoint(p, kColor, vis_msg_);
   }
   // print PublishPredictedScan robot loc
-  printf("PublishPredictedScan robot_loc: %f, %f\n", robot_loc.x(), robot_loc.y());
+  printf("PublishPredictedScan robot_loc: %f, %f, %f \n", robot_loc.x(), robot_loc.y(), robot_angle);
 }
 
 void PublishTrajectory() {
