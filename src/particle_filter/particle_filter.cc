@@ -186,7 +186,7 @@ void ParticleFilter::Resample() {
     float weight = exp(p.weight - max_weight_);
     buckets.push_back(Vector2f(total_weight, total_weight + weight));
     // print each weight
-    cout << "Resample weight: " << (p.weight - max_weight_) << endl;
+    cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
     total_weight += weight;
   }
   vector<Particle> new_particles;
@@ -231,7 +231,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   if (!odom_initialized_) {
     return;
   }
-  return;
+  // return;
   // print observe laser
   cout << "ObserveLaser" << endl;
   for (Particle& p : particles_) {
@@ -267,8 +267,8 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
         rng_.Gaussian(0, sigma),
         rng_.Gaussian(0, sigma));
     // transform the delta to the world frame
-    delta = Vector2f(delta.x()*cos(p.angle - prev_odom_angle_) - delta.y()*sin(p.angle - prev_odom_angle_), delta.x()*sin(p.angle - prev_odom_angle_) + delta.y()*cos(p.angle - prev_odom_angle_));
-    p.loc += delta + epsilon;
+    Vector2f delta_local = Vector2f(delta.x()*cos(p.angle - prev_odom_angle_) - delta.y()*sin(p.angle - prev_odom_angle_), delta.x()*sin(p.angle - prev_odom_angle_) + delta.y()*cos(p.angle - prev_odom_angle_));
+    p.loc += delta_local + epsilon;
     p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
     // ensure angle is between 0 and 2pi
     if (p.angle < 0) {
@@ -279,6 +279,11 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   }
   prev_odom_loc_ = odom_loc;
   prev_odom_angle_ = odom_angle;
+
+  // print the location and angle of each particle on a line
+  for (const Particle& p : particles_) {
+    cout << "Predict " << p.loc.x() << " " << p.loc.y() << " " << p.angle << endl;
+  }
 
 
   // You will need to use the Gaussian random number generator provided. For
@@ -313,12 +318,11 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   if (!odom_initialized_) {
     return;
   }
-  return;
   Vector2f& loc = *loc_ptr;
   float& angle = *angle_ptr;
-  loc = particles_[0].loc;
-  angle = particles_[0].angle;
-  return;
+  // loc = particles_[0].loc;
+  // angle = particles_[0].angle;
+  // return;
   // Compute the best estimate of the robot's location based on the current set
   // of particles. The computed values must be set to the `loc` and `angle`
   // variables to return them. Modify the following assignments:
