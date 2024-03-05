@@ -152,10 +152,7 @@ void ParticleFilter::Update(const vector<float>& ranges,
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
   // float coeff = pow(GAUSSIAN_DIST_COEFF, (ranges.size() / 10 * params_.observation_model_gamma));
   p_ptr->weight = params_.observation_model_gamma * x;
-<<<<<<< HEAD
   // p_ptr->weight = -10;
-=======
->>>>>>> 0c770cba184f980c7c317f576fbc3a1602bb2eed
   // print x, p_ptr->weight
   cout << "Update "  << " " << p_ptr->weight << endl;
   // print the ranges.size() and predicted_scan.size()

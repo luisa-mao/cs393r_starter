@@ -42,7 +42,7 @@ struct Particle {
 // hard coding here for now, will be replaced by a config file
 struct ParticleFilterParams {
   // Number of particles to use.
-  int num_particles = 10;
+  int num_particles = 50;
   // coeffs for the motion model
   float k1 = 0.3; // translation error from translation coeff
   float k2 = 0.3; // rotation error from translation coeff
