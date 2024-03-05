@@ -44,10 +44,10 @@ struct ParticleFilterParams {
   // Number of particles to use.
   int num_particles = 10;
   // coeffs for the motion model
-  float k1 = 0.1; // translation error from translation coeff
-  float k2 = 0.1; // rotation error from translation coeff
-  float k3 = 0.1; // translation error from rotation coeff
-  float k4 = 0.1; // rotation error from rotation coeff
+  float k1 = 0.3; // translation error from translation coeff
+  float k2 = 0.3; // rotation error from translation coeff
+  float k3 = 0.3; // translation error from rotation coeff
+  float k4 = 0.3; // rotation error from rotation coeff
   // Standard deviation of the observation model.
   float observation_model_stddev = 10;
   float observation_model_gamma = .1;

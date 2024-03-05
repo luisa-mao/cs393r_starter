@@ -49,8 +49,7 @@ using Eigen::Vector2i;
 using vector_map::VectorMap;
 
 // DEFINE_double(num_particles, 50, "Number of particles");
-
-
+int counter = 0;
 
 namespace particle_filter {
 
@@ -152,7 +151,8 @@ void ParticleFilter::Update(const vector<float>& ranges,
   }
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
   // float coeff = pow(GAUSSIAN_DIST_COEFF, (ranges.size() / 10 * params_.observation_model_gamma));
-  p_ptr->weight = -params_.observation_model_gamma * x;
+  p_ptr->weight = params_.observation_model_gamma * x;
+  // p_ptr->weight = -10;
   // print x, p_ptr->weight
   cout << "Update "  << " " << p_ptr->weight << endl;
   // print the ranges.size() and predicted_scan.size()
@@ -196,6 +196,7 @@ void ParticleFilter::Resample() {
       if (r >= buckets[i].x() && r < buckets[i].y()) {
         particles_[i].weight = 1.0;
         new_particles.push_back(particles_[i]);
+        cout << "r: " << r << "     Buckets[i].x: " << buckets[i].x() << "     Buckets[i].y: " << buckets[i].y() << endl;
         break;
       }
     }
@@ -237,7 +238,11 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   for (Particle& p : particles_) {
     Update(ranges, range_min, range_max, angle_min, angle_max, &p);
   }
-  Resample();
+  counter +=1;
+  if(counter%20 == 0){
+    Resample();
+    counter = 0;
+  }
   // exit(0);
 }
 
@@ -257,10 +262,10 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // return;
   
   Vector2f delta(odom_loc - prev_odom_loc_);
-  float delta_angle = odom_angle - prev_odom_angle_;
+  float delta_angle = math_util::AngleDiff(odom_angle, prev_odom_angle_);
   float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
   // print delta, delta_angle, sigma
-  cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
+  // cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
 
   for (Particle& p : particles_) {
     Vector2f epsilon(
@@ -271,19 +276,20 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
     p.loc += delta_local + epsilon;
     p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
     // ensure angle is between 0 and 2pi
-    if (p.angle < 0) {
-      p.angle += 2*M_PI;
-    } else if (p.angle > 2*M_PI) {
-      p.angle -= 2*M_PI;
-    }
+    p.angle = math_util::AngleMod(p.angle);
+    // if (p.angle < 0) {
+    //   p.angle += 2*M_PI;
+    // } else if (p.angle > 2*M_PI) {
+    //   p.angle -= 2*M_PI;
+    // }
   }
   prev_odom_loc_ = odom_loc;
   prev_odom_angle_ = odom_angle;
 
   // print the location and angle of each particle on a line
-  for (const Particle& p : particles_) {
-    cout << "Predict " << p.loc.x() << " " << p.loc.y() << " " << p.angle << endl;
-  }
+  // for (const Particle& p : particles_) {
+  //   cout << "Predict " << p.loc.x() << " " << p.loc.y() << " " << p.angle << endl;
+  // }
 
 
   // You will need to use the Gaussian random number generator provided. For
