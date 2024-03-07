@@ -105,23 +105,15 @@ void PublishParticles() {
   vector<particle_filter::Particle> particles;
   particle_filter_.GetParticles(&particles);
   for (const particle_filter::Particle& p : particles) {
-    std::cout << "Particle Location: (" << p.loc.x() << ", " << p.loc.y() << "), ";
-    std::cout << "Particle Angle: " << p.angle << " ";
     DrawParticle(p.loc, p.angle, vis_msg_);
   }
-  std::cout << std::endl;
 }
 
 void PublishPredictedScan() {
-  // const uint32_t kColor = 0xd67d00;
-  const uint32_t kColor = 0x00ff00;
-
+  const uint32_t kColor = 0xd67d00;
   Vector2f robot_loc(0, 0);
   float robot_angle(0);
   particle_filter_.GetLocation(&robot_loc, &robot_angle);
-  // Initialize 26.8195 14.3962 0
-  // Vector2f robot_loc(26.8195, 14.3962);
-  // float robot_angle(0);
   vector<Vector2f> predicted_scan;
   particle_filter_.GetPredictedPointCloud(
       robot_loc,
@@ -135,8 +127,6 @@ void PublishPredictedScan() {
   for (const Vector2f& p : predicted_scan) {
     DrawPoint(p, kColor, vis_msg_);
   }
-  // print PublishPredictedScan robot loc
-  printf("PublishPredictedScan robot_loc: %f, %f, %f \n", robot_loc.x(), robot_loc.y(), robot_angle);
 }
 
 void PublishTrajectory() {
@@ -201,7 +191,7 @@ void PublishLocation() {
   localization_msg_.pose.x = robot_loc.x();
   localization_msg_.pose.y = robot_loc.y();
   localization_msg_.pose.theta = robot_angle;
-  // localization_publisher_.publish(localization_msg_);
+  localization_publisher_.publish(localization_msg_);
 }
 
 void OdometryCallback(const nav_msgs::Odometry& msg) {
