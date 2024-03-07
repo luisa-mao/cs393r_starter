@@ -80,9 +80,9 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   // expected observations, to be used for the update step.
 
   // Note: The returned values must be set using the `scan` variable:
-  scan.resize(num_ranges);
+  scan.resize(num_ranges/10);
   // Fill in the entries of scan using array writes, e.g. scan[i] = ...
-  for (size_t i = 0; i < scan.size(); ++i) {
+  for (size_t i = 0; i < scan.size(); i++) {
     scan[i] = Vector2f(INFINITY, INFINITY);
   }
 
@@ -112,7 +112,7 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   // Eigen::Matrix3f local_T_world = world_T_local.inverse();
 
   for (size_t i = 0; i < scan.size(); i++) {
-    float ray_angle = angle + angle_min + i*(angle_max - angle_min)/num_ranges;
+    float ray_angle = angle + angle_min + i*10*(angle_max - angle_min)/num_ranges;
     Eigen::Vector2f end_point = loc + Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
     // Eigen::Vector2f end_point = Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
     line2f ray(loc, end_point);
@@ -143,10 +143,10 @@ void ParticleFilter::Update(const vector<float>& ranges,
   GetPredictedPointCloud(p_ptr->loc, p_ptr->angle, ranges.size(), range_min, range_max, angle_min, angle_max, &predicted_scan);
   float weight = 0;
   for (size_t i = 0; i < ranges.size(); i+=10) {
-    if (ranges[i] <= range_min || ranges[i] >= range_max || predicted_scan[i] == Vector2f(INFINITY, INFINITY)){
+    if (ranges[i] <= range_min || ranges[i] >= range_max || predicted_scan[i/10] == Vector2f(INFINITY, INFINITY)){
       continue;
     }
-    weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i]).norm(), 2);
+    weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i/10]).norm(), 2);
     // cout << "Weight: " << weight << " ranges "<< ranges[i]<<" predicted scan "<<(predicted_scan[i]-p_ptr->loc).norm()<< endl;
   }
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
@@ -239,7 +239,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     Update(ranges, range_min, range_max, angle_min, angle_max, &p);
   }
   counter +=1;
-  if(counter%20 == 0){
+  if(counter == 10){
     Resample();
     counter = 0;
   }
