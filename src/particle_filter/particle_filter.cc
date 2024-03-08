@@ -173,43 +173,44 @@ void ParticleFilter::Resample() {
   // we find the maximum of the log likelihoods,
   // then apply a coefficient to give the maximum likelihood a weight of 1
   // to get rid of the disappearing weights problem
-  float max_weight_ = -INFINITY;
-  for (const Particle& p : particles_) {
-    if (p.weight > max_weight_) {
-      max_weight_ = p.weight;
-    }
-  }
+  double max_weight_ = -INFINITY;
+  for (const Particle& p : particles_)
+    max_weight_ = std::max(max_weight_, p.weight);
 
-  vector<Vector2f> buckets;
-  float total_weight = 0;
-  for (const Particle& p : particles_) {
-    float weight = exp(p.weight - max_weight_);
-    buckets.push_back(Vector2f(total_weight, total_weight + weight));
+  vector<double> buckets(particles_.size());
+  double total_weight = 0;
+  for (size_t i = 0; i < particles_.size(); ++i) {
+    float weight = exp(particles_[i].weight - max_weight_);
+    buckets[i] = total_weight + weight;
     // print each weight
-    cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
+    // cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
     total_weight += weight;
   }
-  vector<Particle> new_particles;
+  vector<Particle> new_particles(particles_.size());
   for (size_t j = 0; j < particles_.size(); ++j) {
-    float r = rng_.UniformRandom(0, total_weight);
-    for (size_t i = 0; i < particles_.size(); ++i) {
-      if (r >= buckets[i].x() && r < buckets[i].y()) {
-        particles_[i].weight = 1.0;
-        new_particles.push_back(particles_[i]);
-        cout << "r: " << r << "     Buckets[i].x: " << buckets[i].x() << "     Buckets[i].y: " << buckets[i].y() << endl;
-        break;
-      }
-    }
+    double r = rng_.UniformRandom(0, total_weight);
+    // Find which bucket r falls into
+    int bucket_idx = std::upper_bound(buckets.begin(), buckets.end(), r) - buckets.begin();
+    particles_[bucket_idx].weight = 1.0;
+    new_particles[j] = particles_[bucket_idx];
+// for (size_t i = 0; i < particles_.size(); ++i) {
+//       if (r >= buckets[i].x() && r < buckets[i].y()) {
+//         particles_[i].weight = 1.0;
+//         new_particles.push_back(particles_[i]);
+//         // cout << "r: " << r << "     Buckets[i].x: " << buckets[i].x() << "     Buckets[i].y: " << buckets[i].y() << endl;
+//         break;
+//       }
+//     }
   }
   particles_ = new_particles; // does this correctly replace particles_ with new_particles?
 
   // print the first five resampled particles
-  cout << "Resample " ;
-  cout<< " total weight "<< total_weight << endl;
-  for (size_t i = 0; i < particles_.size(); ++i) {
-    cout << "Resample " << particles_[i].loc.x() << " " << particles_[i].loc.y() << " " << particles_[i].angle << " " << particles_[i].weight << endl;
-  }  
-  cout << endl;
+  // cout << "Resample " ;
+  // cout<< " total weight "<< total_weight << endl;
+  // for (size_t i = 0; i < particles_.size(); ++i) {
+  //   cout << "Resample " << particles_[i].loc.x() << " " << particles_[i].loc.y() << " " << particles_[i].angle << " " << particles_[i].weight << endl;
+  // }  
+  // cout << endl;
 
 
   // You will need to use the uniform random number generator provided. For
