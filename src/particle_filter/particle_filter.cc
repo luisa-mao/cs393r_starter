@@ -246,6 +246,31 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   // exit(0);
 }
 
+__global__ // line 295 for-loop refactoring
+void ParticleFilter::OdomUpdate(const Vector2f& odom_loc,
+                                const float odom_angle,
+                                int N,
+                                float sigma,
+                                Vector2f delta,
+                                float prev_odom_angle,
+                                float delta_angle,
+                                Params params){
+
+  int index = threadIdx.x = blockIdx.x * blockDim.x;
+
+  if(index < N){
+    Particle& p = particles[index];
+    curandState_t state;
+    curand_init(index, 0, 0, &state);
+    Vector2f epsilon(curand_normal(&state) * sigma, curand_normal(&state) * sigma);
+    Vector2f delta_local = Vector2f(delta.x*cos(p.angle - prev_odom_angle) - delta.y*sin(p.angle - prev_odom_angle), 
+                                    delta.x*sin(p.angle - prev_odom_angle) + delta.y*cos(p.angle - prev_odom_angle));
+    p.loc += delta_local + epsilon;
+    p.angle += delta_angle + curand_normal(&state) * (params.k3*delta.norm() + params.k4*delta_angle);
+    p.angle = math_util::AngleMod(p.angle);
+  }
+}
+
 void ParticleFilter::Predict(const Vector2f& odom_loc,
                              const float odom_angle) {
   // Implement the predict step of the particle filter here.
@@ -267,22 +292,27 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   // print delta, delta_angle, sigma
   // cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
 
-  for (Particle& p : particles_) {
-    Vector2f epsilon(
-        rng_.Gaussian(0, sigma),
-        rng_.Gaussian(0, sigma));
-    // transform the delta to the world frame
-    Vector2f delta_local = Vector2f(delta.x()*cos(p.angle - prev_odom_angle_) - delta.y()*sin(p.angle - prev_odom_angle_), delta.x()*sin(p.angle - prev_odom_angle_) + delta.y()*cos(p.angle - prev_odom_angle_));
-    p.loc += delta_local + epsilon;
-    p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
-    // ensure angle is between 0 and 2pi
-    p.angle = math_util::AngleMod(p.angle);
-    // if (p.angle < 0) {
-    //   p.angle += 2*M_PI;
-    // } else if (p.angle > 2*M_PI) {
-    //   p.angle -= 2*M_PI;
-    // }
-  }
+  // function: OdomUpdate() REFACTORING
+  // for (Particle& p : particles_) {
+  //   Vector2f epsilon(
+  //       rng_.Gaussian(0, sigma),
+  //       rng_.Gaussian(0, sigma));
+  //   // transform the delta to the world frame
+  //   Vector2f delta_local = Vector2f(delta.x()*cos(p.angle - prev_odom_angle_) - delta.y()*sin(p.angle - prev_odom_angle_), delta.x()*sin(p.angle - prev_odom_angle_) + delta.y()*cos(p.angle - prev_odom_angle_));
+  //   p.loc += delta_local + epsilon;
+  //   p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
+  //   // ensure angle is between 0 and 2pi
+  //   p.angle = math_util::AngleMod(p.angle);
+  //   // if (p.angle < 0) {
+  //   //   p.angle += 2*M_PI;
+  //   // } else if (p.angle > 2*M_PI) {
+  //   //   p.angle -= 2*M_PI;
+  //   // }
+  // }
+
+  int N = num_particles;
+  updateParticles<<<(N+255)/256, 256>>>(dev_particles, N, sigma, delta, prev_odom_angle, delta_angle, params);
+
   prev_odom_loc_ = odom_loc;
   prev_odom_angle_ = odom_angle;
 
