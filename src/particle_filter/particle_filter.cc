@@ -239,7 +239,7 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     Update(ranges, range_min, range_max, angle_min, angle_max, &p);
   }
   counter +=1;
-  if(counter == 10){
+  if(counter == 20){
     Resample();
     counter = 0;
   }
