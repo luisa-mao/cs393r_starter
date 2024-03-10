@@ -112,8 +112,9 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   // Eigen::Matrix3f local_T_world = world_T_local.inverse();
 
   for (size_t i = 0; i < scan.size(); i++) {
-    float ray_angle = angle + angle_min + i*10*(angle_max - angle_min)/num_ranges;
-    Eigen::Vector2f end_point = loc + Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
+    float ray_angle = angle_min + i*10*(angle_max - angle_min)/num_ranges;
+    Eigen::Vector2f base_link_end_point = Eigen::Vector2f(range_max*cos(ray_angle) + laser_offset, range_max*sin(ray_angle));
+    Eigen::Vector2f end_point = world_T_local.block<2, 2>(0, 0)*base_link_end_point + world_T_local.block<2, 1>(0, 2);
     // Eigen::Vector2f end_point = Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
     line2f ray(loc, end_point);
     for (size_t j = 0; j < map_.lines.size(); ++j) {

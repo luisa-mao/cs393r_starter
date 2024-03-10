@@ -234,7 +234,7 @@ void OdometryCallback(const nav_msgs::Odometry& msg) {
   const float odom_angle =
       2.0 * atan2(msg.pose.pose.orientation.z, msg.pose.pose.orientation.w);
   particle_filter_.Predict(odom_loc, odom_angle);
-  PublishLocation();
+  // PublishLocation();
   PublishVisualization();
 }
 
