@@ -50,8 +50,10 @@ struct ParticleFilterParams {
   float k4 = 0.3; // rotation error from rotation coeff
   // Standard deviation of the observation model.
   float observation_model_stddev = .1;
-  float observation_model_gamma = .1;
+  float observation_model_gamma = .01;
 
+  float d_short = 1.5;
+  float d_long = 1.5;
 };
 
 class ParticleFilter {
