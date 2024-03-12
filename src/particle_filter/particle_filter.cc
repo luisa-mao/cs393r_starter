@@ -48,7 +48,6 @@ using Eigen::Vector2f;
 using Eigen::Vector2i;
 using vector_map::VectorMap;
 
-// DEFINE_double(num_particles, 50, "Number of particles");
 int counter = 0;
 
 namespace particle_filter {
@@ -109,13 +108,11 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   Eigen::Matrix3f world_T_local = Eigen::Matrix3f::Identity();
   world_T_local.block<2, 1>(0, 2) = loc;
   world_T_local.block<2, 2>(0, 0) << cos(angle), -sin(angle), sin(angle), cos(angle);
-  // Eigen::Matrix3f local_T_world = world_T_local.inverse();
 
   for (size_t i = 0; i < scan.size(); i++) {
     float ray_angle = angle_min + i*10*(angle_max - angle_min)/num_ranges;
     Eigen::Vector2f base_link_end_point = Eigen::Vector2f(range_max*cos(ray_angle) + laser_offset, range_max*sin(ray_angle));
     Eigen::Vector2f end_point = world_T_local.block<2, 2>(0, 0)*base_link_end_point + world_T_local.block<2, 1>(0, 2);
-    // Eigen::Vector2f end_point = Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
     line2f ray(loc, end_point);
     for (size_t j = 0; j < map_.lines.size(); ++j) {
       const line2f& map_line = map_.lines[j];
@@ -156,16 +153,9 @@ void ParticleFilter::Update(const vector<float>& ranges,
     else {
       weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i/10]).norm(), 2);
     }
-    // cout << "Weight: " << weight << " ranges "<< ranges[i]<<" predicted scan "<<(predicted_scan[i]-p_ptr->loc).norm()<< endl;
   }
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
-  // float coeff = pow(GAUSSIAN_DIST_COEFF, (ranges.size() / 10 * params_.observation_model_gamma));
   p_ptr->weight = params_.observation_model_gamma * x;
-  // p_ptr->weight = -10;
-  // print x, p_ptr->weight
-  // cout << "Update "  << " " << p_ptr->weight << endl;
-  // print the ranges.size() and predicted_scan.size()
-  // cout << "ranges.size() " << ranges.size() << " predicted_scan.size() " << predicted_scan.size() << endl;
 }
 
 void ParticleFilter::Resample() {
@@ -191,9 +181,6 @@ void ParticleFilter::Resample() {
   for (size_t i = 0; i < particles_.size(); ++i) {
     float weight = exp(particles_[i].weight - max_weight_);
     buckets[i] = total_weight + weight;
-    // print each weight
-    // cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
-    // cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
     total_weight += weight;
   }
   vector<Particle> new_particles(particles_.size());
@@ -203,25 +190,9 @@ void ParticleFilter::Resample() {
     int bucket_idx = std::upper_bound(buckets.begin(), buckets.end(), r) - buckets.begin();
     particles_[bucket_idx].weight = 1.0;
     new_particles[j] = particles_[bucket_idx];
-// for (size_t i = 0; i < particles_.size(); ++i) {
-//       if (r >= buckets[i].x() && r < buckets[i].y()) {
-//         particles_[i].weight = 1.0;
-//         new_particles.push_back(particles_[i]);
-//         // cout << "r: " << r << "     Buckets[i].x: " << buckets[i].x() << "     Buckets[i].y: " << buckets[i].y() << endl;
-//         break;
-//       }
-//     }
+
   }
-  particles_ = new_particles; // does this correctly replace particles_ with new_particles?
-
-  // print the first five resampled particles
-  // cout << "Resample " ;
-  // cout<< " total weight "<< total_weight << endl;
-  // for (size_t i = 0; i < particles_.size(); ++i) {
-  //   cout << "Resample " << particles_[i].loc.x() << " " << particles_[i].loc.y() << " " << particles_[i].angle << " " << particles_[i].weight << endl;
-  // }  
-  // cout << endl;
-
+  particles_ = new_particles;
 
   // You will need to use the uniform random number generator provided. For
   // example, to generate a random number between 0 and 1:
@@ -243,9 +214,6 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
   if (!odom_initialized_) {
     return;
   }
-  // return;
-  // print observe laser
-  cout << "ObserveLaser" << endl;
   for (Particle& p : particles_) {
     Update(ranges, range_min, range_max, angle_min, angle_max, &p);
   }
@@ -254,7 +222,6 @@ void ParticleFilter::ObserveLaser(const vector<float>& ranges,
     Resample();
     counter = 0;
   }
-  // exit(0);
 }
 
 void ParticleFilter::Predict(const Vector2f& odom_loc,
@@ -270,13 +237,10 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
     odom_initialized_ = true;
     return;
   }
-  // return;
   
   Vector2f delta(odom_loc - prev_odom_loc_);
   float delta_angle = math_util::AngleDiff(odom_angle, prev_odom_angle_);
   float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
-  // print delta, delta_angle, sigma
-  cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
 
   for (Particle& p : particles_) {
     Vector2f epsilon(
@@ -288,20 +252,9 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
     p.angle += delta_angle + rng_.Gaussian(0, params_.k3*delta.norm() + params_.k4*delta_angle);
     // ensure angle is between 0 and 2pi
     p.angle = math_util::AngleMod(p.angle);
-    // if (p.angle < 0) {
-    //   p.angle += 2*M_PI;
-    // } else if (p.angle > 2*M_PI) {
-    //   p.angle -= 2*M_PI;
-    // }
   }
   prev_odom_loc_ = odom_loc;
   prev_odom_angle_ = odom_angle;
-
-  // print the location and angle of each particle on a line
-  // for (const Particle& p : particles_) {
-  //   cout << "Predict " << p.loc.x() << " " << p.loc.y() << " " << p.angle << endl;
-  // }
-
 
   // You will need to use the Gaussian random number generator provided. For
   // example, to generate a random number from a Gaussian with mean 0, and
@@ -326,8 +279,6 @@ void ParticleFilter::Initialize(const string& map_file,
     p.angle = angle;
     p.weight = 1.0/params_.num_particles;
   }
-  // print initialize
-  cout << "Initialize " << loc.x() << " " << loc.y() << " " << angle << endl;
 }
 
 void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr, 
@@ -337,9 +288,7 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   }
   Vector2f& loc = *loc_ptr;
   float& angle = *angle_ptr;
-  // loc = particles_[0].loc;
-  // angle = particles_[0].angle;
-  // return;
+
   // Compute the best estimate of the robot's location based on the current set
   // of particles. The computed values must be set to the `loc` and `angle`
   // variables to return them. Modify the following assignments:
@@ -347,26 +296,17 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   angle = 0;
   float cos_angle = 0;
   float sin_angle = 0;
-  // print the length of particles_
-  cout << "Length of particles_: " << particles_.size() << endl;
   
   for (const Particle& p : particles_) {
     loc += p.loc;
     cos_angle += cos(p.angle);
     sin_angle += sin(p.angle);
-    // angle += math_util::AngleMod(p.angle);
-  // print the location
-    // cout << "GetLocation loc: " << p.loc.x() << " " << p.loc.y() << " angle: " << p.angle << endl;
     
   }
   angle = atan2(sin_angle, cos_angle);
   loc /= particles_.size();
-  // angle /= particles_.size();
-
-  // print the location
-  cout << "GetLocation loc: " << loc.x() << " " << loc.y() << " angle: " << angle << endl;
 
 }
 
 
-}  // namespace particle_filter
+} 

@@ -137,14 +137,8 @@ void PublishScan(){
   vector<float> ranges = last_laser_msg_.ranges;
   float min_angle = last_laser_msg_.angle_min;
   float angle_increment = (last_laser_msg_.angle_max - last_laser_msg_.angle_min)/(ranges.size());
-  // cout << "min angle: " << min_angle << " angle increment: " << angle_increment << endl;
   for (size_t i = 0; i < ranges.size(); i+=10) {
     float angle = min_angle + i * angle_increment;
-    // convert angle to radians
-    // angle = DegToRad(angle);
-    // cout<< "angle: " << angle << " range: " << ranges[i] << endl;
-    // print the max and min ranges
-    // cout << "max range: " << particle_filter_.max_range_ << " min range: " << particle_filter_.min_range_ << endl;
     if (ranges[i] >= last_laser_msg_.range_max || ranges[i] <= last_laser_msg_.range_min) {
       continue;
     }
