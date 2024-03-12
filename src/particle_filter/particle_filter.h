@@ -42,16 +42,18 @@ struct Particle {
 // hard coding here for now, will be replaced by a config file
 struct ParticleFilterParams {
   // Number of particles to use.
-  int num_particles = 50;
+  int num_particles = 60;
   // coeffs for the motion model
-  float k1 = 0.3; // translation error from translation coeff
-  float k2 = 0.3; // rotation error from translation coeff
-  float k3 = 0.3; // translation error from rotation coeff
-  float k4 = 0.3; // rotation error from rotation coeff
+  float k1 = 0.5; // translation error from translation coeff
+  float k2 = 0.5; // rotation error from translation coeff
+  float k3 = 0.5; // translation error from rotation coeff
+  float k4 = 0.5; // rotation error from rotation coeff
   // Standard deviation of the observation model.
-  float observation_model_stddev = .01;
-  float observation_model_gamma = .001;
+  float observation_model_stddev = .1;
+  float observation_model_gamma = .009;
 
+  float d_short = .5;
+  float d_long = 1;
 };
 
 class ParticleFilter {
@@ -102,6 +104,8 @@ class ParticleFilter {
                               float angle_max,
                               std::vector<Eigen::Vector2f>* scan);
 
+  // for debugging
+  float laser_offset = 0.2;
  private:
 
   // List of particles being tracked.

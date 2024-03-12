@@ -112,8 +112,9 @@ void ParticleFilter::GetPredictedPointCloud(const Vector2f& loc,
   // Eigen::Matrix3f local_T_world = world_T_local.inverse();
 
   for (size_t i = 0; i < scan.size(); i++) {
-    float ray_angle = angle + angle_min + i*10*(angle_max - angle_min)/num_ranges;
-    Eigen::Vector2f end_point = loc + Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
+    float ray_angle = angle_min + i*10*(angle_max - angle_min)/num_ranges;
+    Eigen::Vector2f base_link_end_point = Eigen::Vector2f(range_max*cos(ray_angle) + laser_offset, range_max*sin(ray_angle));
+    Eigen::Vector2f end_point = world_T_local.block<2, 2>(0, 0)*base_link_end_point + world_T_local.block<2, 1>(0, 2);
     // Eigen::Vector2f end_point = Eigen::Vector2f(range_max*cos(ray_angle), range_max*sin(ray_angle));
     line2f ray(loc, end_point);
     for (size_t j = 0; j < map_.lines.size(); ++j) {
@@ -146,7 +147,15 @@ void ParticleFilter::Update(const vector<float>& ranges,
     if (ranges[i] <= range_min || ranges[i] >= range_max || predicted_scan[i/10] == Vector2f(INFINITY, INFINITY)){
       continue;
     }
-    weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i/10]).norm(), 2);
+    else if (ranges[i] < (p_ptr->loc - predicted_scan[i/10]).norm() - params_.d_short){
+      weight += pow(params_.d_short, 2);
+    }
+    else if (ranges[i] > (p_ptr->loc - predicted_scan[i/10]).norm() + params_.d_long){
+      weight += pow(params_.d_long, 2);
+    }
+    else {
+      weight += pow(ranges[i] - (p_ptr->loc - predicted_scan[i/10]).norm(), 2);
+    }
     // cout << "Weight: " << weight << " ranges "<< ranges[i]<<" predicted scan "<<(predicted_scan[i]-p_ptr->loc).norm()<< endl;
   }
   float x = -0.5*weight / (params_.observation_model_stddev*params_.observation_model_stddev);
@@ -154,9 +163,9 @@ void ParticleFilter::Update(const vector<float>& ranges,
   p_ptr->weight = params_.observation_model_gamma * x;
   // p_ptr->weight = -10;
   // print x, p_ptr->weight
-  cout << "Update "  << " " << p_ptr->weight << endl;
+  // cout << "Update "  << " " << p_ptr->weight << endl;
   // print the ranges.size() and predicted_scan.size()
-  cout << "ranges.size() " << ranges.size() << " predicted_scan.size() " << predicted_scan.size() << endl;
+  // cout << "ranges.size() " << ranges.size() << " predicted_scan.size() " << predicted_scan.size() << endl;
 }
 
 void ParticleFilter::Resample() {
@@ -183,6 +192,7 @@ void ParticleFilter::Resample() {
     float weight = exp(particles_[i].weight - max_weight_);
     buckets[i] = total_weight + weight;
     // print each weight
+    // cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
     // cout << "Resample log weight: " << (p.weight - max_weight_) << "actual weight " << weight << endl;
     total_weight += weight;
   }
@@ -266,7 +276,7 @@ void ParticleFilter::Predict(const Vector2f& odom_loc,
   float delta_angle = math_util::AngleDiff(odom_angle, prev_odom_angle_);
   float sigma = params_.k1*delta.norm() + params_.k2*delta_angle;
   // print delta, delta_angle, sigma
-  // cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
+  cout << "Predict " << delta.x() << " " << delta.y() << " " << delta_angle << " " << sigma << endl;
 
   for (Particle& p : particles_) {
     Vector2f epsilon(
@@ -335,18 +345,23 @@ void ParticleFilter::GetLocation(Eigen::Vector2f* loc_ptr,
   // variables to return them. Modify the following assignments:
   loc = Vector2f(0, 0);
   angle = 0;
+  float cos_angle = 0;
+  float sin_angle = 0;
   // print the length of particles_
   cout << "Length of particles_: " << particles_.size() << endl;
   
   for (const Particle& p : particles_) {
     loc += p.loc;
-    angle += p.angle;
+    cos_angle += cos(p.angle);
+    sin_angle += sin(p.angle);
+    // angle += math_util::AngleMod(p.angle);
   // print the location
     // cout << "GetLocation loc: " << p.loc.x() << " " << p.loc.y() << " angle: " << p.angle << endl;
     
   }
+  angle = atan2(sin_angle, cos_angle);
   loc /= particles_.size();
-  angle /= particles_.size();
+  // angle /= particles_.size();
 
   // print the location
   cout << "GetLocation loc: " << loc.x() << " " << loc.y() << " angle: " << angle << endl;
