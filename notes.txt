@@ -9,3 +9,4 @@ cd ~/ut_automata
 ./bin/simulator --localize
 
 ./bin/navigation
+
